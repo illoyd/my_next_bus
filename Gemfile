@@ -74,6 +74,10 @@ gem 'httparty'
 gem 'devise', '~> 3.4'
 gem 'devise-async'
 gem 'cancancan', '~> 1.9'
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+gem 'omniauth-linkedin'
 
 #
 # Internal services (e.g. queues, caches)
