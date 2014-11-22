@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   
+  devise_for :users
   namespace :london do
     resources :stops, only: [:index, :show]
     resources :buses, only: [:index, :show]
   end
+  
+  root to: "london/stops#index"
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
