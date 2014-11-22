@@ -20,6 +20,10 @@ class NotTfL::Response
     @predictions.sort_by(&:estimated_arrival)
   end
   
+  def predictions_by_line
+    predictions.group_by(&:line_name)
+  end
+  
   def messages
     @messages
   end    

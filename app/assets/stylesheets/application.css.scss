@@ -20,63 +20,104 @@
 @import "forms";
 
 body {
-  padding-top: 50px;
+  padding-top: 70px;
 }
 
-.page-header h1 { text-align: center; }
+// General purpose
+div.flash-flash, div.flash-info {
+  @extend .alert;
+  @extend .alert-info;
+}
 
-.prediction {
-  @extend .row;
-  margin-bottom: 1em;
-  
-  .line {
-    @extend .col-xs-3;
-    font-size: 55px;
-    text-align: center;
-    line-height: 55px;
-  }
-  
-  .time {
-    @extend .col-xs-2;
-    @extend .badge;
-    font-size: 55px;
-    text-align: center;
-    line-height: 55px;
-  }
-  
-  .time.due {
-    background-color: $brand-warning;
-    font-size: 40px;
-    text-align: center;
-    line-height: 55px;
-  }
-  
-  .details {
-    @extend .col-xs-7;
+div.flash-notice, div.flash-success {
+  @extend .alert;
+  @extend .alert-success;
+}
 
-    .minutes {
-      @extend .text-muted;
-      font-size: 20px;
-      text-align: left;
-      line-height: 25px;
+div.flash-alert, div.flash-warning {
+  @extend .alert;
+  @extend .alert-warning;
+}
+
+div.flash-error, div.flash-danger {
+  @extend .alert;
+  @extend .alert-danger;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 0.5em;
+
+  span.emoji {
+    font-size: 100px;
+    line-height: 110px;
+    font-family: AppleColorEmoji, 'Apple Color Emoji', 'Segoe UI Emoji', NotoColorEmoji, 'Segoe UI Symbol', EmojiSymbols, Symbola, 'Android Emoji', AndroidEmoji, 'Arial Unicode MS', 'Zapf Dingbats', AppleSDGothicNeo-Regular, 'lucida grande', tahoma, verdana, arial, sans-serif;
+  }
+  
+  span.stop-indicator {
+    @extend .label;
+    @extend .label-danger;
+    font-size: $font-size-h5;
+    vertical-align: top;
+  }
+}
+
+.predictions {
+  text-align: center;
+  
+  .line { @extend .col-xs-5; }
+  .next { @extend .col-xs-3; }
+  .then { @extend .col-xs-4; }
+
+  .header {
+    @extend .row;
+    background-color: $gray-lighter;
+    
+    h2 {
+      font-size: $font-size-h4;
+      font-color: $gray;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
+  
+  .prediction {
+    @extend .row;
+    margin-top:    1em;
+    margin-bottom: 1em;
+
+    .line {
+      text-align: center;
+
+      .line-name {
+        @extend .badge;
+        background-color: $brand-info;
+        font-size: 45px;
+        line-height: 45px;
+        min-width: 100px;
+      }
     }
     
-    .destination {
-      font-size: 30px;
-      text-align: left;
-      line-height: 30px;
-  
-      .to {
-        font-size: 20px;
-        line-height: 25px;
-        @extend .text-muted;
+    .next {
+      font-size: 45px;
+      line-height: 45px;
+
+      .time {
+      }
+    }
+    
+    .next.due {
+      font-size: 35px;
+    }
+
+    .then {
+
+      .time {
+        @extend .badge;
+        background-color: $gray-light;
+        font-size: 18px;
+        line-height: 22px;
       }
     }
   }
-}
-
-.filters {
-  @extend .well;
-  @extend .well-sm;
-  @extend .text-center;
 }

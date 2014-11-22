@@ -1,18 +1,20 @@
-.page-header
-  %h1
-    #{ @statusboard.stop_name }
-    %span.label.label-danger #{ @statusboard.stop_indicator }
+%h1
+  #{ @statusboard.stop_name }
+  %span.stop-indicator #{ @statusboard.stop_indicator }
 
-.filters
-  - @statusboard.routes.each do |line_name|
-    %button.btn.active{type: 'button', data: { toggle: 'button'}, aria: {pressed: true}, autocomplete: false}= line_name
-
-- @statusboard.predictions.each do |status|
-  .prediction{ data: {line: status.line_name} }
-    .line= status.line_name
-    .time{ class: ('due' if due?(status)) }= minutes_label_for(status)
-    .details
-      .minutes minutes
-      .destination
-        %span.to to
-        = simplify_destination status
+.predictions
+  .header
+    %h2.line
+    %h2.next next
+    %h2.then then
+    
+  - @statusboard.predictions_by_line.each do |line_name, predictions|
+    - next_prediction, then_predictions = predictions.first, predictions.drop(1)
+    .prediction{ data: {line: line_name} }
+      .line
+        .line-name= line_name
+      .next{ class: ('due' if due?(next_prediction)) }
+        .time= minutes_label_for(next_prediction)
+      .then
+        - then_predictions.each do |then_prediction|
+          .time= minutes_label_for then_prediction

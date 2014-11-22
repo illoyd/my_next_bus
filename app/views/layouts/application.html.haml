@@ -18,6 +18,7 @@
             %span.icon-bar
             %span.icon-bar
           %a.navbar-brand{:href => london_stops_path} MyNextBus
+          %p.navbar-text London
         #navbar.collapse.navbar-collapse
           %ul.nav.navbar-nav
             %li.active
@@ -27,4 +28,9 @@
             %li
               %a{:href => "#contact"} Contact
 
-    .container= yield
+    .container
+      / Messages
+      = render partial: 'flash'
+
+      / The main content
+      = yield

@@ -1,7 +1,7 @@
 // General search form
 // Inline form
 form.stop {
-  
+
   div.group {
     @extend .form-group;
     
@@ -10,7 +10,7 @@ form.stop {
       @extend .sr-only;
     } // .label
 
-    input[type=text], input[type=number] {
+    input[type=text], input[type=number], input[type=tel] {
       @extend .form-control;
       @extend .input-lg;
       text-align: center;
