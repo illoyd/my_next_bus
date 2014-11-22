@@ -24,7 +24,7 @@ module London::StopsHelper
   def simplify_destination(prediction)
     destination = prediction.destination.dup
     
-    REPLACEMENT_DICTIONARY.each { |k,v| destination.gsub!(k, v) }
+    REPLACEMENT_DICTIONARY.each { |k,v| destination.gsub!(/\b#{ k }\b/, v) }
 
     destination
   end
