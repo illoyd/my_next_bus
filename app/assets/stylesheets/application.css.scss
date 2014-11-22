@@ -23,6 +23,8 @@ body {
   padding-top: 50px;
 }
 
+.page-header h1 { text-align: center; }
+
 .prediction {
   @extend .row;
   margin-bottom: 1em;

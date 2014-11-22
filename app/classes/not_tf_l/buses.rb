@@ -49,7 +49,7 @@ class NotTfL::Buses
   end
   
   def message(response)
-    NotTfL::Prediction.new Hash[MESSAGE_FIELDS.zip(response)]
+    NotTfL::Message.new Hash[MESSAGE_FIELDS.zip(response)]
   end
 
   def base_query

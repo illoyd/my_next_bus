@@ -1,6 +1,7 @@
-%h1.text-center
-  #{ @statusboard.stop_name }
-  %span.label.label-danger #{ @statusboard.stop_indicator }
+.page-header
+  %h1
+    #{ @statusboard.stop_name }
+    %span.label.label-danger #{ @statusboard.stop_indicator }
 
 .filters
   - @statusboard.routes.each do |line_name|
