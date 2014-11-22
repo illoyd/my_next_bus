@@ -1,0 +1,8 @@
+%h1 Find a Stop!
+
+= form_tag( london_stops_path, method: :get, class: 'stop', role: 'form' ) do |f|
+  .group
+    = label_tag :stop, 'Stop'
+    = number_field_tag :stop, nil, placeholder: 72350
+  .group
+    = submit_tag 'Go!'

@@ -1,0 +1,80 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= # require_tree .
+ *= require_self
+ */
+
+@import "bootstrap-sprockets";
+@import "theme";
+@import "bootstrap";
+@import "forms";
+
+body {
+  padding-top: 50px;
+}
+
+.prediction {
+  @extend .row;
+  margin-bottom: 1em;
+  
+  .line {
+    @extend .col-xs-3;
+    font-size: 55px;
+    text-align: center;
+    line-height: 55px;
+  }
+  
+  .time {
+    @extend .col-xs-2;
+    @extend .badge;
+    font-size: 55px;
+    text-align: center;
+    line-height: 55px;
+  }
+  
+  .time.due {
+    background-color: $brand-warning;
+    font-size: 40px;
+    text-align: center;
+    line-height: 55px;
+  }
+  
+  .details {
+    @extend .col-xs-7;
+
+    .minutes {
+      @extend .text-muted;
+      font-size: 20px;
+      text-align: left;
+      line-height: 25px;
+    }
+    
+    .destination {
+      font-size: 30px;
+      text-align: left;
+      line-height: 30px;
+  
+      .to {
+        font-size: 20px;
+        line-height: 25px;
+        @extend .text-muted;
+      }
+    }
+  }
+}
+
+.filters {
+  @extend .well;
+  @extend .well-sm;
+  @extend .text-center;
+}

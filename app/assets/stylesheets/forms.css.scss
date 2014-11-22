@@ -1,0 +1,94 @@
+// General search form
+// Inline form
+form.stop {
+  
+  div.group {
+    @extend .form-group;
+    
+    label {
+      @extend .control-label;
+      @extend .sr-only;
+    } // .label
+
+    input[type=text], input[type=number] {
+      @extend .form-control;
+      @extend .input-lg;
+      text-align: center;
+    }
+    
+    input[type=submit] {
+      @extend .btn;
+      @extend .btn-primary;
+      @extend .btn-block;
+    }
+
+  } // .group
+
+}
+
+// Horizontal form
+form.horizontal {
+  @extend .form-horizontal;
+  
+  div.group {
+    @extend .form-group;
+    
+    label {
+      @extend .col-sm-3;
+      @extend .control-label;
+    } // .label
+    
+    .controls {
+      @extend .col-sm-9;
+      
+      input[type=text], textarea, select {
+        @extend .form-control;
+      }
+    } // .controls
+    
+    .buttons {
+      @extend .col-sm-9;
+      @extend .col-sm-offset-3;
+      
+      input[type=submit] {
+        @extend .btn;
+        @extend .btn-primary;
+      }
+    } // .buttons
+
+  } // .group
+
+}
+
+// Inline form
+form.inline {
+  @extend .form-inline;
+  
+  div.group {
+    @extend .form-group;
+    @extend .form-group-sm;
+    
+    label {
+      @extend .sr-only;
+    } // .label
+
+    input[type=text], select {
+      @extend .form-control;
+      @extend .input-sm;
+    }
+    
+    input[type=submit] {
+      @extend .btn;
+      @extend .btn-sm;
+      @extend .btn-primary;
+    }
+
+    button, a {
+      @extend .btn;
+      @extend .btn-sm;
+      @extend .btn-default;
+    }
+
+  } // .group
+
+}

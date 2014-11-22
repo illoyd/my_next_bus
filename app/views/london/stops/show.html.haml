@@ -1,0 +1,17 @@
+%h1.text-center
+  #{ @statusboard.stop_name }
+  %span.label.label-danger #{ @statusboard.stop_indicator }
+
+.filters
+  - @statusboard.routes.each do |line_name|
+    %button.btn.active{type: 'button', data: { toggle: 'button'}, aria: {pressed: true}, autocomplete: false}= line_name
+
+- @statusboard.predictions.each do |status|
+  .prediction{ data: {line: status.line_name} }
+    .line= status.line_name
+    .time{ class: ('due' if due?(status)) }= minutes_label_for(status)
+    .details
+      .minutes minutes
+      .destination
+        %span.to to
+        = simplify_destination status
