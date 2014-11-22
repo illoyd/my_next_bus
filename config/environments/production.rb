@@ -19,6 +19,20 @@ Rails.application.configure do
   # For large-scale production use, consider using a caching reverse proxy like
   # NGINX, varnish or squid.
   # config.action_dispatch.rack_cache = true
+  if ENV["MEMCACHEDCLOUD_SERVERS"]
+    rack_cache_client = Dalli::Client.new((ENV["MEMCACHEDCLOUD_SERVERS"] || "").split(","),
+                                          :username => ENV["MEMCACHEDCLOUD_USERNAME"],
+                                          :password => ENV["MEMCACHEDCLOUD_PASSWORD"],
+                                          :failover => true,
+                                          :socket_timeout => 1.5,
+                                          :socket_failure_delay => 0.2,
+                                          :value_max_bytes => 10485760)
+    config.action_dispatch.rack_cache = {
+      :metastore    => rack_cache_client,
+      :entitystore  => rack_cache_client
+    }
+    config.static_cache_control = "public, max-age=2592000"
+  end
 
   # Disable Rails's static asset server (Apache or NGINX will already do this).
   config.serve_static_assets = false
@@ -53,7 +67,9 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
+  if ENV["MEMCACHEDCLOUD_SERVERS"]
+    config.cache_store = :dalli_store, ENV["MEMCACHEDCLOUD_SERVERS"].split(','), { :username => ENV["MEMCACHEDCLOUD_USERNAME"], :password => ENV["MEMCACHEDCLOUD_PASSWORD"] }
+  end
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'

@@ -74,6 +74,7 @@ GEM
     connection_pool (2.1.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
+    dalli (2.7.2)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
     devise (3.4.1)
@@ -313,6 +314,7 @@ DEPENDENCIES
   byebug
   cancancan (~> 1.9)
   coffee-rails (~> 4.1.0)
+  dalli
   devise (~> 3.4)
   devise-async
   factory_girl_rails
@@ -324,6 +326,7 @@ DEPENDENCIES
   httparty
   jbuilder (~> 2.0)
   jquery-rails (~> 4.0.0.beta2)
+  kgio
   lograge
   newrelic_rpm
   pg

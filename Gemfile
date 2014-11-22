@@ -77,6 +77,9 @@ gem 'cancancan', '~> 1.9'
 
 #
 # Internal services (e.g. queues, caches)
+gem 'rack-cache'
+gem 'dalli'
+gem 'kgio'
 gem 'redis'
 gem 'redis-rails'
 gem 'sidekiq', '~> 3.2'
