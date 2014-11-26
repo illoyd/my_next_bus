@@ -114,5 +114,6 @@ end
 group :production do
   gem 'newrelic_rpm'
   gem 'lograge'
-  gem 'rails_12factor'
 end
+
+gem 'rails_12factor', group: [:development, :production]

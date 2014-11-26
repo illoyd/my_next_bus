@@ -3,13 +3,13 @@ class User < ActiveRecord::Base
   TEMP_EMAIL_REGEX = /\Achange@me/
   
   # Include default devise modules. Others available are:
-  # :database_authenticatable, :confirmable, :lockable, :timeoutable, :recoverable
-  devise :registerable, :rememberable, :trackable, :validatable, :omniauthable, :confirmable
+  # :database_authenticatable, :registerable, :validatable, :lockable, :timeoutable, :recoverable
+  devise :rememberable, :trackable, :omniauthable, :confirmable
 
-validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
+  validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
-
+    
     # Get the identity and user if they exist
     identity = Identity.find_for_oauth(auth)
 
@@ -35,11 +35,21 @@ validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
           name: auth.extra.raw_info.name,
           #username: auth.info.nickname || auth.uid,
           email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
-          password: Devise.friendly_token[0,20]
+          photo_url:     auth.info.image,
+          big_photo_url: auth.info.image,
+          # password: Devise.friendly_token[0,20]
         )
         user.skip_confirmation!
         user.save!
       end
+    
+    # Update user photos
+    else
+      user.update_columns(
+        photo_url:     auth.info.image,
+        big_photo_url: auth.info.image
+      )
+      user.touch
     end
 
     # Associate the identity with the user if needed
@@ -53,4 +63,13 @@ validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
   def email_verified?
     self.email && self.email !~ TEMP_EMAIL_REGEX
   end
+  
+  def photo_or_default_url
+    self.photo_url || 'http://pbs.twimg.com/profile_images/2284174872/7df3h38zabcvjylnyfe3_normal.png'
+  end
+  
+  def big_photo_or_default_url
+    self.big_photo_url || 'https://pbs.twimg.com/profile_images/2284174872/7df3h38zabcvjylnyfe3_bigger.png'
+  end
+
 end

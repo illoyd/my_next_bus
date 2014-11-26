@@ -1,13 +1,15 @@
 %h1 Find a stop
 
-= form_tag( london_stops_path, method: :get, class: 'stop', role: 'form' ) do |f|
-  .group
-    = label_tag :stop, 'Enter a stop ID'
-    = telephone_field_tag :stop, nil, placeholder: 72350
-  .group
-    = submit_tag 'Go!'
+- cache do
+  = form_tag( london_stops_path, method: :get, class: 'stop', role: 'form' ) do |f|
+    .group
+      = label_tag :stop, 'Enter a stop ID'
+      = telephone_field_tag :stop, nil, placeholder: 72350
+    .group
+      = submit_tag 'Go!'
 
-%p.text-muted
-  Enter the five-digit stop code, shown on the bus stop marker, to get real-time bus arrivals!
+  %p.text-muted
+    Enter the five-digit stop code, shown on the bus stop marker, to get real-time bus arrivals!
 
-= render partial: 'sign_in_form'
+- unless signed_in?
+  = render partial: 'sign_in_form'

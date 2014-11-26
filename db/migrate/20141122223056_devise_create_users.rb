@@ -12,6 +12,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.datetime :reset_password_sent_at
 
       ## Rememberable
+      t.string   :remember_token
       t.datetime :remember_created_at
 
       ## Trackable
@@ -32,6 +33,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
+      ## Profile images
+      t.string :photo_url
+      t.string :big_photo_url
 
       t.timestamps
     end
