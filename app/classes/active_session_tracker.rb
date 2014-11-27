@@ -24,5 +24,9 @@ class ActiveSessionTracker
   def record_visit
     Redis.current.setex(cache_key, @session_duration, Time.now)
   end
+  
+  def clear!
+    Redis.current.del(cache_key)
+  end
 
 end

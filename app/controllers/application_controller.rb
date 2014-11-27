@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   before_filter :ensure_signup_complete, only: [:new, :create, :update, :destroy]
   
+  before_action :predict_stop
+
   after_action :record_visit
 
   def new_session_path(scope)
@@ -19,6 +21,13 @@ class ApplicationController < ActionController::Base
     # email hasn't been verified yet
     if current_user && !current_user.email_verified?
       redirect_to finish_signup_path(current_user)
+    end
+  end
+  
+  def predict_stop
+    if signed_in? && ActiveSessionTracker.new(current_user).new_session?
+      record_visit
+      redirect_to london_stop_path(72350)
     end
   end
   

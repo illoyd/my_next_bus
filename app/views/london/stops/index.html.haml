@@ -13,3 +13,6 @@
 
 - unless signed_in?
   = render partial: 'sign_in_form'
+
+- else
+  %p New session? #{ ActiveSessionTracker.new(current_user).new_session? }

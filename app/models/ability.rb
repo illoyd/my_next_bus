@@ -29,7 +29,9 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     
-    can :manage, user
-    can :manage, StopRequest, user_id: user.id
+    if user
+      can :manage, user
+      can :manage, StopRequest, user_id: user.id
+    end
   end
 end

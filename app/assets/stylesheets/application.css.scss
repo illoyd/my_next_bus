@@ -58,7 +58,7 @@ h1 {
     @extend .label;
     @extend .label-danger;
     font-size: $font-size-h5;
-    vertical-align: top;
+    vertical-align: middle;
   }
 }
 
@@ -71,7 +71,7 @@ h1 {
 
   .header {
     @extend .row;
-    background-color: $gray-light;
+    background-color: $gray-lighter;
     
     h2 {
       font-size: $font-size-h4;
@@ -84,7 +84,10 @@ h1 {
   h3.destination {
     text-align: left;
     font-size: $font-size-h4;
-    background-color: $gray-lighter;
+    font-color: $gray-dark;
+    padding-bottom: 4px;
+    border-bottom: 2px solid $gray-light;
+    // background-color: $gray-light;
     
     span.to {
       font-color: $gray-light;
@@ -129,7 +132,9 @@ h1 {
   }
   
   .prediction.due .next {
-    font-size: 35px;
+    @extend .badge;
+    font-size: 30px;
+    background-color: $brand-warning;
   }
 
 }

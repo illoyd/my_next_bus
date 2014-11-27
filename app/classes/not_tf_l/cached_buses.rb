@@ -16,7 +16,7 @@ class NotTfL::CachedBuses < NotTfL::Buses
   end
 
   def set_cache(query, response)
-    Redis.current.setex( cache_key(query), 45.seconds, response )
+    Redis.current.setex( cache_key(query), 30.seconds, response )
   end
   
   def cache_key(query)
