@@ -1,0 +1,27 @@
+- statistics = UserRequestsAnalyticsQuery.for(current_user)
+%script{type: "text/javascript"}
+  google.load("visualization", "1", {packages:["corechart"]});
+  $(document).on("page:change", drawSeriesChart);
+
+  function drawSeriesChart() {
+
+  var data = google.visualization.arrayToDataTable([
+  ['Stop', 'Minute of Day', 'Day of Week', 'Stop', 'Requests'],
+  - statistics.each do |data_point, count|
+    ['#{ data_point[0] }', #{ data_point[1] }, #{ data_point[2] }, '#{ data_point[0] }', #{ count }],
+  ]);
+
+  var options = {
+  title: 'Activity Map',
+  //titlePosition: 'none',
+  vAxis: {title: 'Minute of Day', minValue: 0, maxValue: 24*60},
+  hAxis: {title: 'Day of Week', minValue: 1, maxValue: 7},
+  bubble: {textStyle: {color: 'transparent'}, opacity: 0.5},
+  legend: {position: 'top', maxLines: 8}
+  };
+
+  var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+  chart.draw(data, options);
+
+  }
+#series_chart_div{style: 'width: 100%; height: 500px;'}

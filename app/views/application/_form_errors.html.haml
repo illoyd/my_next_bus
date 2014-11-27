@@ -1,0 +1,10 @@
+- if @user.errors.any?
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title
+        %strong Oops!
+        We had a few problems...
+    .panel-body
+      %ol
+        - @user.errors.full_messages.each do |error|
+          %li= error

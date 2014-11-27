@@ -4,7 +4,7 @@
   = form_tag( london_stops_path, method: :get, class: 'stop', role: 'form' ) do |f|
     .group
       = label_tag :stop, 'Enter a stop ID'
-      = telephone_field_tag :stop, nil, placeholder: 72350
+      = telephone_field_tag :stop, nil, placeholder: 72350, autofocus: true
     .group
       = submit_tag 'Go!'
 

@@ -126,13 +126,13 @@ Devise.setup do |config|
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-  # config.remember_for = 2.weeks
+  config.remember_for = 2.weeks
 
   # Invalidates all the remember me tokens when the user signs out.
   config.expire_all_remember_me_on_sign_out = true
 
   # If true, extends the user's remember period when remembered via cookie.
-  # config.extend_remember_period = false
+  config.extend_remember_period = true
 
   # Options to be passed to the created cookie. For instance, you can set
   # secure: true in order to force SSL only cookies.
@@ -234,6 +234,10 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
+  config.omniauth :twitter,   Rails.application.secrets.twitter['oauth_key'],  Rails.application.secrets.twitter['oauth_secret']
+  # config.omniauth :facebook,  Rails.application.secrets.facebook['oauth_key'], Rails.application.secrets.facebook['oauth_secret']
+  # config.omniauth :linked_in, "KEY", "SECRET"
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
@@ -256,9 +260,5 @@ Devise.setup do |config|
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-
-  # config.omniauth :facebook,  Rails.application.secrets.facebook['oauth_key'], Rails.application.secrets.facebook['oauth_secret']
-  config.omniauth :twitter,   Rails.application.secrets.twitter['oauth_key'],  Rails.application.secrets.twitter['oauth_secret']
-  # config.omniauth :linked_in, "KEY", "SECRET"
 
 end

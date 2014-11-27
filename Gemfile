@@ -58,6 +58,13 @@ gem 'haml-rails'
 gem 'hashie'
 
 #
+# Reporting gems
+gem 'hightop'
+gem 'groupdate'
+gem 'active_median'
+gem 'chartkick'
+
+#
 # Service gems
 # gem 'twitter', '~> 5.11.0'
 

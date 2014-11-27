@@ -1,39 +1,33 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :finish_signup]
+  # before_action :set_user, only: [:show, :edit, :update, :destroy, :finish_signup]
+  load_and_authorize_resource
+  respond_to :html
 
   # GET /users/:id.:format
   def show
-    # authorize! :read, @user
+    respond_with @user
   end
 
   # GET /users/:id/edit
   def edit
-    # authorize! :update, @user
+    respond_with @user
   end
 
   # PATCH/PUT /users/:id.:format
   def update
-    # authorize! :update, @user
-    respond_to do |format|
-      if @user.update(user_params)
-        sign_in(@user == current_user ? @user : current_user, :bypass => true)
-        format.html { redirect_to @user, notice: 'Your profile was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
+    flash[:success] = 'Hooray! We\'ve saved your edits.' if @user.update(user_params)
+    respond_with @user
   end
 
   # GET/PATCH /users/:id/finish_signup
   def finish_signup
     # authorize! :update, @user 
-    if request.patch? && params[:user] #&& params[:user][:email]
+    if request.patch? && params[:user] && params[:user][:email]
       if @user.update(user_params)
         @user.skip_reconfirmation!
         sign_in(@user, :bypass => true)
-        redirect_to @user, notice: 'Your profile was successfully updated.'
+        flash[:success] = 'Hooray! We\'ve saved your edits.'
+        respond_with @user
       else
         @show_errors = true
       end
@@ -51,10 +45,6 @@ class UsersController < ApplicationController
   end
   
   private
-    def set_user
-      @user = User.find(params[:id])
-    end
-
     def user_params
       accessible = [ :name, :email ] # extend with your own params
       accessible << [ :password, :password_confirmation ] unless params[:user][:password].blank?

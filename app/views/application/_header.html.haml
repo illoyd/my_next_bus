@@ -4,7 +4,7 @@
       .navbar-header
         %button.navbar-toggle.collapsed{style: 'margin-top: 5px; margin-bottom: 5px;', "aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
           %span.sr-only Toggle navigation
-          = image_tag('http://pbs.twimg.com/profile_images/2284174872/7df3h38zabcvjylnyfe3_bigger.png', style: 'height: 30px;')
+          = photo_tag_for current_user
         %a.navbar-brand{:href => london_stops_path} MyNextBus
         %p.navbar-text London
 
@@ -13,6 +13,8 @@
           %li= link_to 'Find a stop', london_stops_path
           
           - if signed_in?
+            %li
+              = link_to 'Settings', current_user
             %li
               = link_to 'Sign out', destroy_user_session_path
 

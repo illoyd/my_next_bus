@@ -1,0 +1,21 @@
+= render partial: 'form_errors', object: @user
+
+= form_for(@user, html: {class: 'horizontal'}) do |f|
+  .group
+    = f.label :name
+    .controls
+      = f.text_field :name
+    
+  .group
+    = f.label :email
+    .controls
+      = f.email_field :email
+      - if @user.unconfirmed_email.present?
+        %span.help-block
+          Check your email to confirm #{ mail_to @user.unconfirmed_email }. If that's not right, let us know!
+
+  .group
+    .buttons
+      = f.submit 'Save Edits'
+      = link_to 'Discard Edits', @user, class: 'btn btn-default'
+      

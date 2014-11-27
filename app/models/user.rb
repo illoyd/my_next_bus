@@ -4,8 +4,11 @@ class User < ActiveRecord::Base
   
   # Include default devise modules. Others available are:
   # :database_authenticatable, :registerable, :validatable, :lockable, :timeoutable, :recoverable
-  devise :rememberable, :trackable, :omniauthable, :confirmable
+  devise :rememberable, :trackable, :omniauthable, :confirmable, :async
+  
+  has_many :stop_requests, inverse_of: :user
 
+  validates_presence_of :name, :email
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
@@ -65,11 +68,11 @@ class User < ActiveRecord::Base
   end
   
   def photo_or_default_url
-    self.photo_url || 'http://pbs.twimg.com/profile_images/2284174872/7df3h38zabcvjylnyfe3_normal.png'
+    self.photo_url || '/images/default.png'
   end
   
   def big_photo_or_default_url
-    self.big_photo_url || 'https://pbs.twimg.com/profile_images/2284174872/7df3h38zabcvjylnyfe3_bigger.png'
+    self.big_photo_url || '/images/default.png'
   end
 
 end

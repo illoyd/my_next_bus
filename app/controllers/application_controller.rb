@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :ensure_signup_complete, only: [:new, :create, :update, :destroy]
+  
+  after_action :record_visit
 
   def new_session_path(scope)
     new_user_session_path
@@ -11,12 +13,18 @@ class ApplicationController < ActionController::Base
   
   def ensure_signup_complete
     # Ensure we don't go into an infinite loop
-    return if action_name == 'finish_signup' || (controller_name == 'sessions' && action_name == 'destroy')
+    return if action_name == 'finish_signup' || (controller_name == 'users' && action_name == 'update') || (controller_name == 'sessions' && action_name == 'destroy')
 
     # Redirect to the 'finish_signup' page if the user
     # email hasn't been verified yet
     if current_user && !current_user.email_verified?
       redirect_to finish_signup_path(current_user)
+    end
+  end
+  
+  def record_visit
+    if signed_in?
+      ActiveSessionTracker.new(current_user).record_visit
     end
   end
 

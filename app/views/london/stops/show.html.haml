@@ -8,13 +8,26 @@
     %h2.next next
     %h2.then then
     
-  - @statusboard.predictions_by_line.each do |line_name, predictions|
-    - next_prediction, then_predictions = predictions.first, predictions.drop(1)
-    .prediction{ data: {line: line_name} }
-      .line
-        .line-name= line_name
-      .next{ class: ('due' if due?(next_prediction)) }
-        .time= minutes_label_for(next_prediction)
-      .then
-        - then_predictions.each do |then_prediction|
-          .time= minutes_label_for then_prediction
+  - @statusboard.predictions_by_destination_and_line.each do |destination, lines|
+    %h3.destination{ data: {destination: destination} }
+      %span.to to
+      = destination
+    
+    - lines.each do |line_name, predictions|
+      - next_prediction, then_predictions = predictions.first, predictions.drop(1)
+      .prediction{ data: {line: line_name}, class: ('due' if due?(next_prediction)) }
+        .line
+          .line-name= line_name
+        .next
+          .time= minutes_label_for(next_prediction)
+        .then
+          - then_predictions.each do |then_prediction|
+            .time= minutes_label_for then_prediction
+
+.well.well-sm
+  = form_tag( london_stops_path, method: :get, class: 'inline' ) do |f|
+    .group
+      = label_tag :stop, 'Enter a stop ID'
+      .input-group
+        = text_field_tag :stop, nil, placeholder: params[:id]
+        .input-group-btn= submit_tag 'Go!'

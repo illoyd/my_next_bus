@@ -71,13 +71,24 @@ h1 {
 
   .header {
     @extend .row;
-    background-color: $gray-lighter;
+    background-color: $gray-light;
     
     h2 {
       font-size: $font-size-h4;
       font-color: $gray;
       margin-top: 5px;
       margin-bottom: 5px;
+    }
+  }
+  
+  h3.destination {
+    text-align: left;
+    font-size: $font-size-h4;
+    background-color: $gray-lighter;
+    
+    span.to {
+      font-color: $gray-light;
+      font-size: $font-size-h5;
     }
   }
   
@@ -106,10 +117,6 @@ h1 {
       }
     }
     
-    .next.due {
-      font-size: 35px;
-    }
-
     .then {
 
       .time {
@@ -120,4 +127,9 @@ h1 {
       }
     }
   }
+  
+  .prediction.due .next {
+    font-size: 35px;
+  }
+
 }

@@ -41,7 +41,7 @@ form.horizontal {
     .controls {
       @extend .col-sm-9;
       
-      input[type=text], textarea, select {
+      input[type=text], input[type=email], textarea, select {
         @extend .form-control;
       }
     } // .controls
@@ -90,5 +90,4 @@ form.inline {
     }
 
   } // .group
-
 }
