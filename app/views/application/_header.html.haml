@@ -14,7 +14,7 @@
           
           - if signed_in?
             %li
-              = link_to 'Settings', user_path(current_user)
+              = link_to 'Settings', user_path(current_user), data: {'no-turbolinks' => true}
             %li
               = link_to 'Sign out', destroy_user_session_path
 
