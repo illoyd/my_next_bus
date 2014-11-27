@@ -131,9 +131,10 @@ h1 {
     }
   }
   
-  .prediction.due .next {
+  .prediction.due .next .time {
     @extend .badge;
     font-size: 30px;
+    line-height: 45px;
     background-color: $brand-warning;
   }
 

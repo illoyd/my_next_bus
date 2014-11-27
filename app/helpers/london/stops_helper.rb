@@ -6,6 +6,29 @@ module London::StopsHelper
     'South' => 'S.',
     'West'  => 'W.',
   }
+  
+  def minutes_label_for(prediction)
+    if ( prediction.estimated_arrival - Time.now ) < 60
+      'due'
+    else
+      minutes_for(prediction)
+    end
+  end
+  
+  def next_label_for(prediction)
+    delta = ( prediction.estimated_arrival - Time.now )
+    return 'due' if delta < 60
+    minutes = ( delta / 60.to_f ).floor
+    seconds = fraction_for delta.modulo(60).round, 30
+    "#{ minutes }#{ seconds }".html_safe
+  end
+  
+  def then_label_for(prediction)
+    delta = ( prediction.estimated_arrival - Time.now )
+    return 'due' if delta < 60
+    minutes = ( delta / 60.to_f ).round
+    "#{ minutes }".html_safe
+  end
 
   def minutes_for(prediction)
     delta = ( prediction.estimated_arrival - Time.now )
@@ -21,14 +44,6 @@ module London::StopsHelper
       '&frac12;'
     elsif value < 45
       '&frac34;'
-    end
-  end
-  
-  def minutes_label_for(prediction)
-    if ( prediction.estimated_arrival - Time.now ) < 60
-      'due'
-    else
-      minutes_for(prediction)
     end
   end
   

@@ -4,7 +4,7 @@
 
 .predictions
   .header
-    %h2.line
+    %h2.line= Time.now.strftime('%a, %H:%M')
     %h2.next next
     %h2.then then
     
@@ -19,10 +19,10 @@
         .line
           .line-name= line_name
         .next
-          .time= minutes_label_for(next_prediction)
+          .time= next_label_for(next_prediction)
         .then
           - then_predictions.each do |then_prediction|
-            .time= minutes_label_for then_prediction
+            .time= then_label_for then_prediction
 
 .well.well-sm
   = form_tag( london_stops_path, method: :get, class: 'inline' ) do |f|
@@ -31,3 +31,7 @@
       .input-group
         = text_field_tag :stop, nil, placeholder: params[:id]
         .input-group-btn= submit_tag 'Go!'
+
+%script{type: "text/javascript"}
+  function scheduleRefresh() { Turbolinks.visit('#{ request.original_url }'); }
+  setTimeout(scheduleRefresh, 15 * 1000);
