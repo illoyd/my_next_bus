@@ -94,7 +94,7 @@ before_fork do |server, worker|
   # sleep 1
 
   if run_sidekiq_in_this_thread
-    @sidekiq_pid ||= spawn("bundle exec sidekiq -c #{ ENV['JOB_CONCURRENCY'].to_i }")
+    @sidekiq_pid ||= spawn("bundle exec sidekiq -c #{ ENV['JOB_CONCURRENCY'] || 1 }")
     Rails.logger.info("Spawned sidekiq #{@sidekiq_pid}")
   end
 
