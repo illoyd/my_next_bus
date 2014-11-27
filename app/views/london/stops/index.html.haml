@@ -15,4 +15,10 @@
   = render partial: 'sign_in_form'
 
 - else
-  %p New session? #{ ActiveSessionTracker.new(current_user).new_session? }
+  .panel.panel-default
+    .panel-heading Top stops for you
+    %ul.list-group
+    - TopStopsForUserQuery.new(current_user).each do |stop|
+      %li.list-group-item= link_to stop.name || stop.stop_id, london_stop_path(stop.stop_id)
+
+  %p.text-muted New session? #{ ActiveSessionTracker.new(current_user).new_session? }

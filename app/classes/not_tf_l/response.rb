@@ -49,4 +49,8 @@ class NotTfL::Response
     @predictions.first.stop_indicator
   end
   
+  def predictions?
+    @predictions.any?
+  end
+  
 end

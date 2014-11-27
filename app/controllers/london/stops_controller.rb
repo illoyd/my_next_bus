@@ -14,6 +14,10 @@ class London::StopsController < ApplicationController
   def show
     @statusboard = NotTfL::CachedBuses.new.stop(params[:id])
     
+    if @statusboard.predictions?
+      SaveStopNameJob.perform_later('london', params[:id], @statusboard.stop_name)
+    end
+    
     rescue RestClient::RequestedRangeNotSatisfiable
       flash[:error] = "Sorry, we couldn't find a stop for #{ params[:id] }!"
       redirect_to london_stops_path
