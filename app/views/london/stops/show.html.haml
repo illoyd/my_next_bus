@@ -2,6 +2,23 @@
   #{ @statusboard.stop_name }
   %span.stop-indicator #{ @statusboard.stop_indicator }
 
+- if @statusboard.messages.any?
+  .messages
+    - @statusboard.active_messages.each do |message|
+      %p.message{class: "priority-#{ message.priority }"}
+        %strong
+          - case message.priority
+            - when 1
+              Emergency!
+            - when 2
+              Warning!
+            - when 3, 4
+              Major Incident.
+            - when 5, 6
+              Notice.
+
+        = message.text
+
 .predictions
   .header
     %h2.line= Time.now.strftime('%a, %H:%M')
@@ -33,5 +50,7 @@
         .input-group-btn= submit_tag 'Go!'
 
 %script{type: "text/javascript"}
-  function scheduleRefresh() { Turbolinks.visit('#{ request.original_url }'); }
-  setTimeout(scheduleRefresh, 15 * 1000);
+  function doRefresh() { Turbolinks.visit('#{ request.original_url }'); }
+  function cancelRefresh() { clearTimeout(page_refresh_timer) }
+  page_refresh_timer = setTimeout(doRefresh, 15 * 1000);
+  $(document).on("page:before-change", cancelRefresh)

@@ -1,8 +1,8 @@
 class NotTfL::Buses
   BASE_URI          = 'http://countdown.api.tfl.gov.uk/interfaces/ura/instant_V1'
-  PREDICTION_FIELDS = %w( StopPointName StopPointIndicator StopPointState LineName DestinationText EstimatedTime )
-  MESSAGE_FIELDS    = %w( MessageUUID MessageText MessageType MessagePriority StartTime ExpireTime )
-  FIELDS            = PREDICTION_FIELDS + MESSAGE_FIELDS
+  PREDICTION_FIELDS = %w( StopPointName StopID StopCode1 StopCode2 StopPointType Towards Bearing StopPointIndicator StopPointState Latitude Longitude VisitNumber LineID LineName DirectionID DestinationText DestinationName VehicleID TripID RegistrationNumber EstimatedTime ExpireTime )
+  MESSAGE_FIELDS    = %w( StopPointName StopID StopCode1 StopCode2 StopPointType Towards Bearing StopPointIndicator StopPointState Latitude Longitude MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
+  FIELDS            = ( PREDICTION_FIELDS + MESSAGE_FIELDS ).uniq
   
   def initialize
     RestClient.log = Rails.logger

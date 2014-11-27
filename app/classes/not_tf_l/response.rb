@@ -35,7 +35,11 @@ class NotTfL::Response
   
   def messages
     @messages
-  end    
+  end
+  
+  def active_messages
+    @messages.select{ |msg| msg.start_at.past? && msg.expire_at.future? }.sort_by(&:priority)
+  end
 
   def routes
     @predictions.map{ |prediction| prediction.line_name }.uniq.compact.sort

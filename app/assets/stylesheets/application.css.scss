@@ -62,6 +62,11 @@ h1 {
   }
 }
 
+p.message { padding: 8px; }
+p.priority-1, p.priority-2 { @extend .bg-danger; }
+p.priority-3, p.priority-4 { @extend .bg-warning; }
+p.priority-5, p.priority-6 { @extend .bg-info; }
+
 .predictions {
   text-align: center;
   
