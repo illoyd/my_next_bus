@@ -7,6 +7,11 @@ class London::StopsController < ApplicationController
     # Redirect to stop view if required
     redirect_to london_stop_url(params[:stop]) if params[:stop].present?
     
+    if signed_in?
+      predicted_stop_id = current_user.predictor.predict_now
+      @predicted_stop = TransitStop.find_by(stop_id: predicted_stop_id) if predicted_stop_id
+    end
+    
     # Otherwise just present form!
     flash[:info] = 'Try entering a stop number!' if !params[:stop].nil? && params[:stop].blank?
   end

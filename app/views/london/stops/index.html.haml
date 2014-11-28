@@ -17,8 +17,11 @@
 - else
   .panel.panel-default
     .panel-heading Top stops for you
-    %ul.list-group
-    - TopStopsForUserQuery.new(current_user).each do |stop|
-      %li.list-group-item= link_to stop.name || stop.stop_id, london_stop_path(stop.stop_id)
-
-  %p.text-muted New session? #{ ActiveSessionTracker.new(current_user).new_session? }
+    .list-group
+      = link_to london_stop_path(@predicted_stop.stop_id), class: 'list-group-item' do
+        = @predicted_stop.name || @predicted_stop.stop_id
+        %span.label.label-info Top!
+        
+      - TopStopsForUserQuery.new(current_user).each do |stop|
+        - next if stop.stop_id == @predicted_stop.stop_id
+        = link_to stop.name || stop.stop_id, london_stop_path(stop.stop_id), class: 'list-group-item'

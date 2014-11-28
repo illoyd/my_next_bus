@@ -1,0 +1,6 @@
+- if signed_in?
+  %p.text-muted Signed in as #{ current_user.name }
+  %p.text-muted New session? #{ ActiveSessionTracker.new(current_user).new_session? }
+
+- else
+  %p.text-muted Not signed in

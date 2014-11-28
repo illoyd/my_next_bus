@@ -50,7 +50,4 @@
         .input-group-btn= submit_tag 'Go!'
 
 %script{type: "text/javascript"}
-  function doRefresh() { Turbolinks.visit('#{ request.original_url }'); }
-  function cancelRefresh() { clearTimeout(page_refresh_timer) }
-  page_refresh_timer = setTimeout(doRefresh, 15 * 1000);
-  $(document).on("page:before-change", cancelRefresh)
+  startAutoRefresh();
