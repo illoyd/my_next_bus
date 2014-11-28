@@ -24,6 +24,15 @@ body {
   padding-bottom: $navbar-height+5px !important;
 }
 
+div#banner-ad {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $gray-lighter;
+  border-top: 2px solid $gray-light;
+}
+
 // General purpose
 div.flash-flash, div.flash-info {
   @extend .alert;
