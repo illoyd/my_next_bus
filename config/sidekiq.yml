@@ -4,5 +4,5 @@
 ---
 :queues:
   - default
-  - mailers
+  - mailer
   - background
