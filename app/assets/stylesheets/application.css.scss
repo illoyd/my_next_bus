@@ -20,7 +20,8 @@
 @import "forms";
 
 body {
-  padding-top: 70px;
+  padding-top: $navbar-height+5px !important;
+  padding-bottom: $navbar-height+5px !important;
 }
 
 // General purpose
@@ -47,13 +48,9 @@ div.flash-error, div.flash-danger {
 h1 {
   text-align: center;
   margin-bottom: 0.5em;
+  margin-top: 0.5em;
+  font-size: $font-size-h3;
 
-  span.emoji {
-    font-size: 100px;
-    line-height: 110px;
-    font-family: AppleColorEmoji, 'Apple Color Emoji', 'Segoe UI Emoji', NotoColorEmoji, 'Segoe UI Symbol', EmojiSymbols, Symbola, 'Android Emoji', AndroidEmoji, 'Arial Unicode MS', 'Zapf Dingbats', AppleSDGothicNeo-Regular, 'lucida grande', tahoma, verdana, arial, sans-serif;
-  }
-  
   span.stop-indicator {
     @extend .label;
     @extend .label-danger;

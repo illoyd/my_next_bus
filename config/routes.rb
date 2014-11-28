@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   
   resources :users, only: [:show, :edit, :update]
   
+  resource :ad, only: [:show]
+  
   root to: "london/stops#index"
   
   # The priority is based upon order of creation: first created -> highest priority.

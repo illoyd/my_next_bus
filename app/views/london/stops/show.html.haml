@@ -1,6 +1,7 @@
-%h1
-  #{ @statusboard.stop_name }
-  %span.stop-indicator #{ @statusboard.stop_indicator }
+- cache @statusboard do
+  %h1
+    #{ @statusboard.stop_name }
+    %span.stop-indicator #{ @statusboard.stop_indicator }
 
 - if @statusboard.messages.any?
   .messages
@@ -41,13 +42,14 @@
           - then_predictions.each do |then_prediction|
             .time= then_label_for then_prediction
 
-.well.well-sm
-  = form_tag( london_stops_path, method: :get, class: 'inline' ) do |f|
-    .group
-      = label_tag :stop, 'Enter a stop ID'
-      .input-group
-        = text_field_tag :stop, nil, placeholder: params[:id]
-        .input-group-btn= submit_tag 'Go!'
+- cache params[:id] do
+  .well.well-sm
+    = form_tag( london_stops_path, method: :get, class: 'inline' ) do |f|
+      .group
+        = label_tag :stop, 'Enter a stop ID'
+        .input-group
+          = text_field_tag :stop, nil, placeholder: params[:id]
+          .input-group-btn= submit_tag 'Go!'
 
 %script{type: "text/javascript"}
   startAutoRefresh();

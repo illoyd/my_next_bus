@@ -343,8 +343,8 @@ $navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2
 $navbar-collapse-max-height:       340px;
 
 $navbar-default-color:             $gray-dark;
-$navbar-default-bg:                $gray-darker;
-$navbar-default-border:            $gray-darker;
+$navbar-default-bg:                $gray-light; // Was $gray-darker
+$navbar-default-border:            $gray-light; // Was $gray-darker
 
 // Navbar links
 $navbar-default-link-color:                $gray;

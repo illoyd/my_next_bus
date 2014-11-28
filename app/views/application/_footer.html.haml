@@ -1,6 +1,16 @@
-- if signed_in?
-  %p.text-muted Signed in as #{ current_user.name }
-  %p.text-muted New session? #{ ActiveSessionTracker.new(current_user).new_session? }
+/ Diagnostics and legal
+- cache current_user do
+  .container
+    %p Data provided by #{ link_to 'Transport for London', 'http://www.tfl.gov.uk' }
+    - if signed_in?
+      %p.text-muted Signed in as #{ current_user.name }
+      %p.text-muted New session? #{ ActiveSessionTracker.new(current_user).new_session? }
+    
+    - else
+      %p.text-muted Not signed in
 
-- else
-  %p.text-muted Not signed in
+- cache do
+  %nav.navbar.navbar-default.navbar-fixed-bottom
+    .container
+      .banner-ad= render partial: 'ads'
+  
