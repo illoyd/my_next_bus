@@ -56,6 +56,7 @@ gem 'responders'
 gem 'haml'
 gem 'haml-rails'
 gem 'hashie'
+gem 'ai4r'
 
 #
 # Reporting gems
