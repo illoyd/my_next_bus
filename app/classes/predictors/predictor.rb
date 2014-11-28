@@ -24,6 +24,7 @@ class Predictors::Predictor
   ##
   # Predict the stop based on the +day_of_week+ and +minute_of_day+.
   def predict(day_of_week, minute_of_day)
+    return nil if @predictor.nil?
     @predictor.eval([day_of_week, minute_of_day])
   end
   

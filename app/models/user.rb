@@ -77,6 +77,9 @@ class User < ActiveRecord::Base
   
   def predictor
     @predictor ||= Predictors::Cache.predictor_for(self)
+    
+    rescue ArgumentError
+      @predictor = nil
   end
 
 end
