@@ -2,7 +2,7 @@ class Predictors::Cache
   
   DefaultExpiry = 24.hours
   
-  def self.get_predictor_for(user)
+  def self.predictor_for(user)
     predictor = Redis.current.get(cache_key_for(user))
     if predictor
       predictor = Marshal.load(predictor)

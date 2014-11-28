@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
   end
   
   def predictor
-    @predictor ||= Predictors::Cache.get_predictor_for(self)
+    @predictor ||= Predictors::Cache.predictor_for(self)
   end
 
 end
