@@ -19,6 +19,9 @@ class Predictors::Cache
   
   def self.build_predictor_for(user)
     Predictors::IB1.train_for(user)
+    
+    rescue ArgumentError
+      Predictors::Nil.new
   end
   
   def self.clear_for!(user)

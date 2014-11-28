@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   def predict_stop
     if signed_in? && ActiveSessionTracker.new(current_user).new_session?
       record_visit
-      redirect_to london_stop_path(current_user.predictor.try(:predict_now))
+      redirect_to london_stop_path(current_user.predictor.predict_now)
     end
   end
   
