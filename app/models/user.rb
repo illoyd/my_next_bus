@@ -74,5 +74,9 @@ class User < ActiveRecord::Base
   def big_photo_or_default_url
     self.big_photo_url || '/images/default.png'
   end
+  
+  def predictor
+    @predictor ||= Predictors::Cache.get_predictor_for(self)
+  end
 
 end
