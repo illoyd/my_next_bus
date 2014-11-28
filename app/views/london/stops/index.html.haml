@@ -18,9 +18,10 @@
   .panel.panel-default
     .panel-heading Top stops for you
     .list-group
-      = link_to london_stop_path(@predicted_stop.stop_id), class: 'list-group-item' do
-        = @predicted_stop.name || @predicted_stop.stop_id
-        %span.label.label-info Top!
+      - if @predicted_stop
+        = link_to london_stop_path(@predicted_stop.stop_id), class: 'list-group-item' do
+          = @predicted_stop.name || @predicted_stop.stop_id
+          %span.label.label-info Top!
         
       - TopStopsForUserQuery.new(current_user).each do |stop|
         - next if stop.stop_id == @predicted_stop.stop_id
