@@ -7,4 +7,4 @@ ActionMailer::Base.smtp_settings = {
     :authentication => :plain
 }
 ActionMailer::Base.delivery_method = :smtp
-ActionMailer::Base.default_url_options = { host: 'my-next-bus.herokuapp.com', port: 5000 }
+ActionMailer::Base.default_url_options = { host: 'www.mynextbus.co.uk' }
