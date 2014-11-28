@@ -24,5 +24,5 @@
           %span.label.label-info Top!
         
       - TopStopsForUserQuery.new(current_user).each do |stop|
-        - next if stop.stop_id == @predicted_stop.stop_id
+        - next if @predicted_stop and stop.stop_id == @predicted_stop.stop_id
         = link_to stop.name || stop.stop_id, london_stop_path(stop.stop_id), class: 'list-group-item'
