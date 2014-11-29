@@ -1,0 +1,4 @@
+- if messages.any?
+  .messages
+    - messages.each do |message|
+      = render partial: 'message', object: message

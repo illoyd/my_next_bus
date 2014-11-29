@@ -30,4 +30,10 @@ class NotTfL::Prediction < Hashie::Trash
   property :expire_at,         from: 'ExpireTime', with: ->(value) { Time.at( value.to_f / 1000 ) }
   
   alias :destination :destination_text
+  
+  def expired?
+    return true if expire_at.try(:past?)
+    false
+  end
+
 end

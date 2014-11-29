@@ -1,10 +1,10 @@
-%h1 Find a stop
-
 - cache do
+  %h1 Find a stop
+
   = form_tag( london_stops_path, method: :get, class: 'search', role: 'form' ) do |f|
     .group
       = label_tag :stop, 'Enter a stop ID'
-      = telephone_field_tag :stop, nil, placeholder: 72350, autofocus: true
+      = telephone_field_tag :stop, nil, placeholder: "Example: 72350", autofocus: true
     .group
       = submit_tag 'Go!'
 
@@ -14,15 +14,5 @@
 - unless signed_in?
   = render partial: 'sign_in_form'
 
-- else
-  .panel.panel-default
-    .panel-heading Top stops for you
-    .list-group
-      - if @predicted_stop
-        = link_to london_stop_path(@predicted_stop.stop_id), class: 'list-group-item' do
-          = @predicted_stop.name || @predicted_stop.stop_id
-          %span.label.label-info Top!
-        
-      - TopStopsForUserQuery.new(current_user).each do |stop|
-        - next if @predicted_stop and stop.stop_id == @predicted_stop.stop_id
-        = link_to stop.name || stop.stop_id, london_stop_path(stop.stop_id), class: 'list-group-item'
+- if signed_in?
+  = render partial: 'top_stops', object: TopStopsForUserQuery.new(current_user), locals: {predicted_stop: @predicted_stop}

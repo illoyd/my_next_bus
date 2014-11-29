@@ -1,0 +1,5 @@
+- if top_stop_predicted
+  = link_to london_stop_path(top_stop_predicted.stop_id), class: 'list-group-item' do
+    = top_stop_predicted.name || top_stop_predicted.stop_id
+    %span.label.label-info Top!
+  

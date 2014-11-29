@@ -1,0 +1,10 @@
+- if top_stops.any? || predicted_stop
+  .panel.panel-default
+    .panel-heading Top stops for you
+    .list-group
+      - if predicted_stop
+        = render partial: 'top_stop_predicted', object: predicted_stop
+
+      - top_stops.each do |stop|
+        - next if predicted_stop && stop.stop_id == predicted_stop.stop_id
+        = render partial: 'top_stop', object: stop

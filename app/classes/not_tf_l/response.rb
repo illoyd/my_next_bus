@@ -1,8 +1,9 @@
 class NotTfL::Response
 
   def initialize
+    @stops       = []
     @predictions = []
-    @messages = []
+    @messages    = []
   end
   
   def <<(value)
@@ -11,9 +12,35 @@ class NotTfL::Response
       @predictions << value
     when NotTfL::Message
       @messages << value
+    when NotTfL::Stop
+      @stops << value
     else
       # Do nothing
     end
+  end
+  
+  def stops?
+    @stops.any?
+  end
+  
+  def stop
+    @stops.first
+  end
+  
+  def stops
+    @stops
+  end
+  
+  def stop_name
+    stop.name
+  end
+  
+  def stop_indicator
+    stop.indicator
+  end
+  
+  def predictions?
+    @predictions.any?
   end
   
   def predictions
@@ -37,24 +64,28 @@ class NotTfL::Response
     @messages
   end
   
+  def messages?
+    @messages.any?
+  end
+  
   def active_messages
-    @messages.select{ |msg| msg.start_at.past? && msg.expire_at.future? }.sort_by(&:priority)
+    @messages.select(&:active?).sort_by(&:priority)
   end
 
+  def active_messages?
+    active_messages.any?
+  end
+  
+  def high_priority_messages
+    active_messages.select{ |msg| [1,2].include?(msg.priority) }
+  end
+  
+  def non_high_priority_messages
+    active_messages.reject{ |msg| [1,2].include?(msg.priority) }
+  end
+  
   def routes
-    @predictions.map{ |prediction| prediction.line_name }.uniq.compact.sort
-  end
-  
-  def stop_name
-    @predictions.first.stop_name
-  end
-  
-  def stop_indicator
-    @predictions.first.stop_indicator
-  end
-  
-  def predictions?
-    @predictions.any?
+    @predictions.map(&:line_name).uniq.compact.sort
   end
   
 end

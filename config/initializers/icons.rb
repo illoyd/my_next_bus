@@ -1,7 +1,15 @@
 ##
 # Icons for Font Awesome
 ICONS = {
-  
+
+  info:        'question-sign',
+  question:    'question-sign',
+
+  warning:     'warning-sign',
+
+  danger:      'exclamation-sign',
+  exclamation: 'exclamation-sign',
+
 }.with_indifferent_access.freeze
 
 

@@ -98,6 +98,10 @@ form.inline {
       @extend .sr-only;
     } // .label
 
+    input[type=text], input[type=number], input[type=tel], input[type=email] {
+      @extend .input-sm;
+    } // Inputs
+    
     input[type=submit], button, a {
       @extend .btn-sm;
     }

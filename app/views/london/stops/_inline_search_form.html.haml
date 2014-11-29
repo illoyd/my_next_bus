@@ -1,0 +1,8 @@
+- cache inline_search_form do
+  .well.well-sm
+    = form_tag( london_stops_path, method: :get, class: 'inline' ) do |f|
+      .group
+        = label_tag :stop, 'Enter a stop ID'
+        .input-group
+          = text_field_tag :stop, nil, placeholder: "Example: #{ inline_search_form }"
+          .input-group-btn= submit_tag 'Go!'

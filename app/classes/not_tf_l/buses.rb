@@ -1,8 +1,11 @@
 class NotTfL::Buses
   BASE_URI          = 'http://countdown.api.tfl.gov.uk/interfaces/ura/instant_V1'
+  STOP_FIELDS       = %w( StopPointName StopID StopCode1 StopCode2 StopPointType Towards Bearing StopPointIndicator StopPointState Latitude Longitude )
   PREDICTION_FIELDS = %w( StopPointName StopID StopCode1 StopCode2 StopPointType Towards Bearing StopPointIndicator StopPointState Latitude Longitude VisitNumber LineID LineName DirectionID DestinationText DestinationName VehicleID TripID RegistrationNumber EstimatedTime ExpireTime )
   MESSAGE_FIELDS    = %w( StopPointName StopID StopCode1 StopCode2 StopPointType Towards Bearing StopPointIndicator StopPointState Latitude Longitude MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
-  FIELDS            = ( PREDICTION_FIELDS + MESSAGE_FIELDS ).uniq
+  FIELDS            = ( STOP_FIELDS + PREDICTION_FIELDS + MESSAGE_FIELDS ).uniq
+  
+  STOP_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState LineID LineName DestinationText DestinationName EstimatedTime ExpireTime MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
   
   def initialize
     RestClient.log = Rails.logger
@@ -13,29 +16,37 @@ class NotTfL::Buses
   end
   
   def stop(stop_id)
-    transform( get('StopCode1' => stop_id) )
+    transform(get(
+      'StopCode1' => stop_id,
+      'ReturnList' => STOP_DEFAULT_FIELDS.join(','),
+      'StopAlso' => true
+    ), STOP_DEFAULT_FIELDS)
   end
   
   protected
   
-  def transform(response)
+  def transform(response, return_fields)
     predictions = NotTfL::Response.new
     response.each_line do |line|
-      predictions << parse(JSON.parse(line))
+      predictions << parse(JSON.parse(line), return_fields)
     end
     predictions
   end
   
-  def parse(response)
+  def parse(response, return_fields)
     case response.shift
     
     # Prediction
     when 1, '1'
-      prediction(response)
+      prediction(response, return_fields)
     
     # Flexible Message
     when 2, '2'
-      message(response)
+      message(response, return_fields)
+    
+    # Flexible Message
+    when 0, '0'
+      build_stop(response, return_fields)
     
     # Otherwise, ignore
     else
@@ -44,16 +55,25 @@ class NotTfL::Buses
     end
   end
   
-  def prediction(response)
-    NotTfL::Prediction.new Hash[PREDICTION_FIELDS.zip(response)]
+  def build_stop(response, return_fields)
+    NotTfL::Stop.new build_response_hash(STOP_FIELDS, return_fields, response)
+  end
+
+  def prediction(response, return_fields)
+    NotTfL::Prediction.new build_response_hash(PREDICTION_FIELDS, return_fields, response)
   end
   
-  def message(response)
-    NotTfL::Message.new Hash[MESSAGE_FIELDS.zip(response)]
+  def message(response, return_fields)
+    NotTfL::Message.new build_response_hash(MESSAGE_FIELDS, return_fields, response)
   end
 
   def base_query
     { 'ReturnList' => FIELDS.join(',') }
+  end
+  
+  def build_response_hash(all_keys, keys, values)
+    keys = all_keys & keys
+    Hash[keys.zip(values)]
   end
 
 end

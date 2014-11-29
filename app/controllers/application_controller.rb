@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
     new_user_session_path
   end
   
+  protected
+
   def ensure_signup_complete
     # Ensure we don't go into an infinite loop
     return if action_name == 'finish_signup' || (controller_name == 'users' && action_name == 'update') || (controller_name == 'sessions' && action_name == 'destroy')

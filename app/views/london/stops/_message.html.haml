@@ -1,0 +1,10 @@
+%p.message{class: "priority-#{ message.priority }"}
+  %strong
+    - case message.priority
+      - when 1, 2
+        = icon(:exclamation)
+      - when 3, 4
+        = icon(:warning)
+      - when 5, 6
+        = icon(:question)
+  = message.text

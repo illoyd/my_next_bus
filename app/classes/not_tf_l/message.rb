@@ -21,4 +21,18 @@ class NotTfL::Message < Hashie::Trash
   property :start_at,          from: 'StartTime',  with: ->(value) { Time.at( value.to_f / 1000 ) }
   property :expire_at,         from: 'ExpireTime', with: ->(value) { Time.at( value.to_f / 1000 ) }
 
+  def started?
+    return false if start_at.try(:future?)
+    true
+  end
+
+  def expired?
+    return true if expire_at.try(:past?)
+    false
+  end
+
+  def active?
+    started? && !expired?
+  end
+
 end

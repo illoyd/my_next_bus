@@ -1,6 +1,7 @@
 class London::StopsController < ApplicationController
   
-  after_action :record_visit
+  City = 'london'
+  
   after_action :record_stop_request, only: [:show]
   
   def index
@@ -19,8 +20,8 @@ class London::StopsController < ApplicationController
   def show
     @statusboard = NotTfL::CachedBuses.new.stop(params[:id])
     
-    if @statusboard.predictions?
-      SaveStopNameJob.perform_later('london', params[:id], @statusboard.stop_name)
+    if @statusboard.stop
+      CreateOrUpdateStopJob.perform_later(City, @statusboard.stop)
     end
     
     rescue RestClient::RequestedRangeNotSatisfiable
@@ -30,15 +31,9 @@ class London::StopsController < ApplicationController
   
   protected
   
-  def record_visit
-    if current_user
-      ActiveSessionTracker.new(current_user).record_visit
-    end
-  end
-
   def record_stop_request
     if current_user
-      current_user.stop_requests.create(stop_id: params[:id])
+      RecordStopRequestJob.perform_later(current_user, City, params[:id])
     end
   end
 

@@ -1,24 +1,8 @@
-- cache @statusboard do
-  %h1
-    #{ @statusboard.stop_name }
-    %span.stop-indicator #{ @statusboard.stop_indicator }
+%h1
+  #{ @statusboard.stop_name }
+  %span.stop-indicator #{ @statusboard.stop_indicator }
 
-- if @statusboard.messages.any?
-  .messages
-    - @statusboard.active_messages.each do |message|
-      %p.message{class: "priority-#{ message.priority }"}
-        %strong
-          - case message.priority
-            - when 1
-              Emergency!
-            - when 2
-              Warning!
-            - when 3, 4
-              Major Incident.
-            - when 5, 6
-              Notice.
-
-        = message.text
+= render partial: 'messages', object: @statusboard.high_priority_messages
 
 .predictions
   .header
@@ -26,30 +10,39 @@
     %h2.next next
     %h2.then then
     
-  - @statusboard.predictions_by_destination_and_line.each do |destination, lines|
-    %h3.destination{ data: {destination: destination} }
-      %span.to to
-      = destination
-    
-    - lines.each do |line_name, predictions|
-      - next_prediction, then_predictions = predictions.first, predictions.drop(1)
-      .prediction{ data: {line: line_name}, class: ('due' if due?(next_prediction)) }
-        .line
-          .line-name= line_name
-        .next
-          .time= next_label_for(next_prediction)
-        .then
-          - then_predictions.each do |then_prediction|
-            .time= then_label_for then_prediction
+  - if @statusboard.stop.closed?
+    = render partial: 'stop_closed'  
 
-- cache params[:id] do
-  .well.well-sm
-    = form_tag( london_stops_path, method: :get, class: 'inline' ) do |f|
-      .group
-        = label_tag :stop, 'Enter a stop ID'
-        .input-group
-          = text_field_tag :stop, nil, placeholder: params[:id]
-          .input-group-btn= submit_tag 'Go!'
+  - elsif @statusboard.stop.suspended?
+    = render partial: 'stop_suspended'
+  
+  - elsif @statusboard.stop.temporarily_closed?
+    = render partial: 'temporarily_closed'
 
-%script{type: "text/javascript"}
-  startAutoRefresh();
+  - elsif !@statusboard.predictions? || !@statusboard.stop.show_predictions?
+    = render partial: 'no_predictions'
+  
+  - else
+    - @statusboard.predictions_by_destination_and_line.each do |destination, lines|
+      %h3.destination{ data: {destination: destination} }
+        %span.to to
+        = destination
+      
+      - lines.each do |line_name, predictions|
+        - next_prediction, then_predictions = predictions.first, predictions.drop(1)
+        .prediction{ data: {line: line_name}, class: ('due' if due?(next_prediction)) }
+          .line
+            .line-name= line_name
+          .next
+            .time= next_label_for(next_prediction)
+          .then
+            - then_predictions.each do |then_prediction|
+              .time= then_label_for then_prediction
+
+= render partial: 'messages', object: @statusboard.non_high_priority_messages
+
+/ Search for a stop
+= render partial: 'inline_search_form', object: params[:id]
+
+/ Start autorefresh
+= render partial: 'start_auto_refresh'
