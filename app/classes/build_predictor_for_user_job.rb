@@ -1,5 +1,5 @@
 class BuildPredictorForUserJob < ActiveJob::Base
-  queue_as :default
+  queue_as :background
 
   def perform(user)
     Predictors::Cache.clear_for!(user)
