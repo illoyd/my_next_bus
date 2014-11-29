@@ -1,7 +1,7 @@
 %h1 Find a stop
 
 - cache do
-  = form_tag( london_stops_path, method: :get, class: 'stop', role: 'form' ) do |f|
+  = form_tag( london_stops_path, method: :get, class: 'search', role: 'form' ) do |f|
     .group
       = label_tag :stop, 'Enter a stop ID'
       = telephone_field_tag :stop, nil, placeholder: 72350, autofocus: true

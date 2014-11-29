@@ -1,61 +1,85 @@
 // General search form
-// Inline form
-form.stop {
+form.form {
 
   div.group {
     @extend .form-group;
     
     label {
       @extend .control-label;
-      @extend .sr-only;
-    } // .label
+    } // label
 
-    input[type=text], input[type=number], input[type=tel] {
-      @extend .form-control;
-      @extend .input-lg;
-      text-align: center;
+    input, .form-control {
+      @include box-shadow(none);
+    
+      &:focus {
+        border-color: $input-border;
+        @include box-shadow(none);
+      }
     }
+
+    input[type=text], input[type=number], input[type=tel], input[type=email] {
+      @extend .form-control;
+    } // Inputs
     
     input[type=submit] {
       @extend .btn;
       @extend .btn-primary;
-      @extend .btn-block;
-    }
+    } // Submit button
+
+    button, a {
+      @extend .btn;
+      @extend .btn-default;
+    } // Buttons and links
 
   } // .group
 
 }
 
+// Specific details for the search forms
+form.search {
+  @extend .form;
+
+  div.group {
+
+    label {
+      @extend .sr-only;
+    } // label
+
+    input[type=text], input[type=number], input[type=tel], input[type=email] {
+      @extend .input-lg;
+      text-align: center;
+    } // Inputs
+    
+    input[type=submit] {
+      @extend .btn-block;
+    } // Submit button
+
+    button, a {
+      @extend .btn-block;
+    } // Buttons and link
+
+  } // div.group
+
+}
+
 // Horizontal form
 form.horizontal {
+  @extend .form;
   @extend .form-horizontal;
   
   div.group {
-    @extend .form-group;
     
     label {
       @extend .col-sm-3;
-      @extend .control-label;
     } // .label
     
     .controls {
       @extend .col-sm-9;
-      
-      input[type=text], input[type=email], textarea, select {
-        @extend .form-control;
-        
-        &:focus { @extend .form-control:focus; }
-      }
     } // .controls
     
     .buttons {
       @extend .col-sm-9;
       @extend .col-sm-offset-3;
-      
-      input[type=submit] {
-        @extend .btn;
-        @extend .btn-primary;
-      }
     } // .buttons
 
   } // .group
@@ -64,31 +88,18 @@ form.horizontal {
 
 // Inline form
 form.inline {
+  @extend .form;
   @extend .form-inline;
   
   div.group {
-    @extend .form-group;
     @extend .form-group-sm;
     
     label {
       @extend .sr-only;
     } // .label
 
-    input[type=text], select {
-      @extend .form-control;
-      @extend .input-sm;
-    }
-    
-    input[type=submit] {
-      @extend .btn;
+    input[type=submit], button, a {
       @extend .btn-sm;
-      @extend .btn-primary;
-    }
-
-    button, a {
-      @extend .btn;
-      @extend .btn-sm;
-      @extend .btn-default;
     }
 
   } // .group
