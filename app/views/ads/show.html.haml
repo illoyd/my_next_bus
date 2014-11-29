@@ -1,6 +1,17 @@
 :javascript
-  mopub_ad_unit = "1e3ec9f605fd45f78ae0e409f68e717c";
-  mopub_ad_width = 320; // optional
-  mopub_ad_height = 50; // optional
-  mopub_keywords = "london"; // optional
+  // Tablets and up
+  if (document.width >= 728) {
+    mopub_ad_width = 728;
+    mopub_ad_height = 90;
+    mopub_ad_unit = "440768f59d3b49f3bd47665ed81589c1";
+  }
+  
+  // Phones and down
+  else {
+    mopub_ad_width = 320;
+    mopub_ad_height = 50;
+    mopub_ad_unit = "1e3ec9f605fd45f78ae0e409f68e717c";
+  }
+
+  mopub_keywords = "london";
 %script{src: "http://ads.mopub.com/js/client/mopub.js"}

@@ -18,19 +18,11 @@
 @import "theme";
 @import "bootstrap";
 @import "forms";
+@import "ads";
 
 body {
   padding-top: $navbar-height+5px !important;
   padding-bottom: $navbar-height+5px !important;
-}
-
-div#banner-ad {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: $gray-lighter;
-  border-top: 2px solid $gray-light;
 }
 
 // General purpose
