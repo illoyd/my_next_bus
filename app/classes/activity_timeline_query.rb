@@ -45,19 +45,19 @@ class ActivityTimelineQuery < SimpleDelegator
     end
     
     def starting_hour
-      (@start_minute_of_day.to_f / 60).floor
+      hour_from_minutes(@start_minute_of_day)
     end
     
     def starting_minute
-      @start_minute_of_day.modulo(60)
+      minute_from_minutes(@start_minute_of_day)
     end
     
     def ending_hour
-      (@end_minute_of_day.to_f / 60).floor
+      hour_from_minutes(@end_minute_of_day)
     end
     
     def ending_minute
-      @end_minute_of_day.modulo(60)
+      minute_from_minutes(@end_minute_of_day)
     end
     
     def contiguous?(request)
@@ -73,9 +73,17 @@ class ActivityTimelineQuery < SimpleDelegator
     def to_a
       [ weekday, stop_id, start_time, end_time ]
     end
+    
+    def hour_from_minutes(minutes)
+      (minutes.to_f / 60).floor
+    end
+    
+    def minute_from_minutes(minutes)
+      minutes.modulo(60)
+    end
 
-    def minute_to_time(minute)
-      "#{ (minute.to_f / 60).floor }:#{ minute.modulo(60) }"
+    def minute_to_time(minutes)
+      "#{ hour_from_minutes(minutes) }:#{ minute_from_minutes(minutes) }"
     end
     
   end
