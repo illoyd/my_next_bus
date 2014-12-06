@@ -1,0 +1,10 @@
+- next_prediction, then_predictions = predictions.first, predictions[1,4]
+.prediction{ data: {line: line}, class: ('due' if due?(next_prediction)) }
+  .line
+    .line-name= line
+  .next
+    .time= next_label_for(next_prediction)
+  .then
+    - then_predictions.each do |then_prediction|
+      .time= then_label_for then_prediction
+

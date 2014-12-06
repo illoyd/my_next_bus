@@ -23,21 +23,17 @@
     = render partial: 'no_predictions'
   
   - else
-    - @statusboard.predictions_by_destination_and_line.each do |destination, lines|
-      %h3.destination{ data: {destination: destination} }
-        %span.to to
-        = destination
-      
-      - lines.each do |line_name, predictions|
-        - next_prediction, then_predictions = predictions.first, predictions.drop(1)
-        .prediction{ data: {line: line_name}, class: ('due' if due?(next_prediction)) }
-          .line
-            .line-name= line_name
-          .next
-            .time= next_label_for(next_prediction)
-          .then
-            - then_predictions.each do |then_prediction|
-              .time= then_label_for then_prediction
+    -# Output favorites first
+    - @statusboard.predictions_by_destination_and_line.select{ |k,_| @favorites.include? k }.each do |destination, lines|
+      = render partial: 'destination', object: destination
+      - lines.each do |line, predictions|      
+        = render partial: 'prediction', locals: {line: line, predictions: predictions}
+
+    -# And non-favorites second
+    - @statusboard.predictions_by_destination_and_line.reject{ |k,_| @favorites.include? k }.each do |destination, lines|
+      = render partial: 'destination', object: destination
+      - lines.each do |line, predictions|      
+        = render partial: 'prediction', locals: {line: line, predictions: predictions}
 
 = render partial: 'messages', object: @statusboard.non_high_priority_messages
 

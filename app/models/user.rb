@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   devise :rememberable, :trackable, :omniauthable, :confirmable, :async
   
   has_many :stop_requests, inverse_of: :user
+  has_many :favorite_destinations, inverse_of: :user
 
   validates_presence_of :name, :email
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
@@ -77,6 +78,10 @@ class User < ActiveRecord::Base
   
   def predictor
     @predictor ||= Predictors::Cache.predictor_for(self)
+  end
+  
+  def favorites_for(city, stop_sid)
+    favorite_destinations.where(city: city, stop_sid: stop_sid, favorite: true).distinct.pluck(:destination)
   end
 
 end

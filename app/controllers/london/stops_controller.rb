@@ -19,6 +19,7 @@ class London::StopsController < ApplicationController
 
   def show
     @statusboard = NotTfL::CachedBuses.new.stop(params[:id])
+    @favorites   = signed_in? ? current_user.favorites_for(City, params[:id]) : []
     
     if @statusboard.stop
       CreateOrUpdateStopJob.perform_later(City, @statusboard.stop)
@@ -27,6 +28,19 @@ class London::StopsController < ApplicationController
     rescue RestClient::RequestedRangeNotSatisfiable
       flash[:error] = "Sorry, we couldn't find a stop for #{ params[:id] }!"
       redirect_to london_stops_path
+  end
+  
+  def favorite
+    if signed_in? && params[:id].present? && params[:destination].present?
+      favorite = current_user.favorite_destinations.find_or_create_by(city: City, stop_sid: params[:id], destination: params[:destination])
+      favorite.toggle!(:favorite)
+    end
+    
+    if params[:id].present?
+      redirect_to london_stop_url(params[:id])
+    else
+      redirect_to london_stops_url
+    end
   end
   
   protected

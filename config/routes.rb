@@ -10,7 +10,12 @@ Rails.application.routes.draw do
   end
 
   namespace :london do
-    resources :stops, only: [:index, :show]
+    resources :stops, only: [:index, :show] do
+      member do
+        get :favorite
+      end
+    end
+
     resources :buses, only: [:index, :show]
   end
   

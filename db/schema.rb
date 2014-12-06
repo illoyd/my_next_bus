@@ -11,10 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141129142815) do
+ActiveRecord::Schema.define(version: 20141206112927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "favorite_destinations", force: true do |t|
+    t.integer  "user_id"
+    t.string   "city"
+    t.string   "stop_sid"
+    t.string   "destination"
+    t.boolean  "favorite"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "favorite_destinations", ["city"], name: "index_favorite_destinations_on_city", using: :btree
+  add_index "favorite_destinations", ["destination"], name: "index_favorite_destinations_on_destination", using: :btree
+  add_index "favorite_destinations", ["favorite"], name: "index_favorite_destinations_on_favorite", using: :btree
+  add_index "favorite_destinations", ["stop_sid"], name: "index_favorite_destinations_on_stop_sid", using: :btree
+  add_index "favorite_destinations", ["user_id"], name: "index_favorite_destinations_on_user_id", using: :btree
 
   create_table "identities", force: true do |t|
     t.integer  "user_id"

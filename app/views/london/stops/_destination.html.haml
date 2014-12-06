@@ -1,0 +1,6 @@
+%h3.destination{ data: {destination: destination} }
+  - if signed_in?
+    = link_to favorite_london_stop_path(@statusboard.stop.code1, {destination: destination}) do
+      = @favorites.include?(destination) ? icon(:star) : icon('star-empty')
+    %span.to to
+    = destination
