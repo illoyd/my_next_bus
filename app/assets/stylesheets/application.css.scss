@@ -66,7 +66,7 @@ p.priority-1, p.priority-2 { @extend .bg-danger; }
 p.priority-3, p.priority-4 { @extend .bg-warning; }
 p.priority-5, p.priority-6 { @extend .bg-info; }
 
-.predictions {
+div.predictions {
   text-align: center;
   
   .line { @extend .col-xs-5; }
@@ -121,6 +121,7 @@ p.priority-5, p.priority-6 { @extend .bg-info; }
       line-height: 45px;
 
       .time {
+        a { color: $text-color; }
       }
     }
     
@@ -140,6 +141,42 @@ p.priority-5, p.priority-6 { @extend .bg-info; }
     font-size: 30px;
     line-height: 45px;
     background-color: $brand-warning;
+
+    a { color: $label-color; }
   }
 
+}
+
+h1 {
+  span.route {
+    @extend .label;
+    @extend .label-info;
+    vertical-align: middle;
+  }
+  
+  span.to {
+    font-size: $font-size-h4;
+    color: $gray-light;
+  }
+  
+  span.indicator {
+    @extend .label;
+    @extend .label-danger;
+    font-size: $font-size-h5;
+    vertical-align: middle;
+  }
+}
+
+table.predictions {
+  th.next, td.next {
+    text-align: center;
+  }
+  
+  td.stop {
+    line-height: 20px;
+  }
+  
+  td.next {
+    font-size: 20px;
+  }
 }

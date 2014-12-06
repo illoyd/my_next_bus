@@ -1,0 +1,10 @@
+%h1
+  %span.route= @statusboard.predictions.first.line_name
+  %span.to to
+  = @statusboard.predictions.first.destination_text
+  %span.stop-indicator #{ @statusboard.predictions.first.stop_indicator }
+
+= render partial: 'predictions', object: @statusboard.predictions
+
+/ Start autorefresh
+= render partial: 'start_auto_refresh'

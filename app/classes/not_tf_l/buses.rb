@@ -5,7 +5,8 @@ class NotTfL::Buses
   MESSAGE_FIELDS    = %w( StopPointName StopID StopCode1 StopCode2 StopPointType Towards Bearing StopPointIndicator StopPointState Latitude Longitude MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
   FIELDS            = ( STOP_FIELDS + PREDICTION_FIELDS + MESSAGE_FIELDS ).uniq
   
-  STOP_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState LineID LineName DestinationText DestinationName EstimatedTime ExpireTime MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
+  STOP_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState LineID LineName DestinationText TripID EstimatedTime ExpireTime MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
+  TRIP_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState LineID LineName DestinationText TripID EstimatedTime ExpireTime MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
   
   def initialize
     RestClient.log = Rails.logger
@@ -19,6 +20,14 @@ class NotTfL::Buses
     transform(get(
       'StopCode1' => stop_id,
       'ReturnList' => STOP_DEFAULT_FIELDS.join(','),
+      'StopAlso' => true
+    ), STOP_DEFAULT_FIELDS)
+  end
+  
+  def trip(stop_id)
+    transform(get(
+      'TripID' => stop_id,
+      'ReturnList' => TRIP_DEFAULT_FIELDS.join(','),
       'StopAlso' => true
     ), STOP_DEFAULT_FIELDS)
   end

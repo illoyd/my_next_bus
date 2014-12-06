@@ -8,7 +8,7 @@ class NotTfL::Prediction < Hashie::Trash
   property :towards,           from: 'Towards'
   property :bearing,           from: 'Bearing'
   property :stop_indicator,    from: 'StopPointIndicator'
-  property :stop_state,        from: 'StopPointState'
+  property :stop_state,        from: 'StopPointState',    with: NotTfL::Buses::StopPointStateTransformer
 
   property :latitude,          from: 'Latitude'
   property :longitude,         from: 'Longitude'
@@ -35,5 +35,11 @@ class NotTfL::Prediction < Hashie::Trash
     return true if expire_at.try(:past?)
     false
   end
+
+  def show_stop?
+    NotTfL::Stop::ShowableStopTypes.include?(stop_type)
+  end
+  
+  delegate :open?, :temporarily_closed?, :closed?, :suspended?, to: :stop_state
 
 end

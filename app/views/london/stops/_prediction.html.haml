@@ -3,7 +3,7 @@
   .line
     .line-name= line
   .next
-    .time= next_label_for(next_prediction)
+    .time= link_to next_label_for(next_prediction), london_trip_path(next_prediction.trip_id)
   .then
     - then_predictions.each do |then_prediction|
       .time= then_label_for then_prediction

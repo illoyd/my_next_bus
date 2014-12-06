@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :buses, only: [:index, :show]
+    resources :trips, only: [:show]
   end
   
   resources :users, only: [:show, :edit, :update]

@@ -1,0 +1,6 @@
+%tr
+  %td.stop
+    = link_to prediction.stop_name, london_stop_path(prediction.stop_code1)
+    %span.label.label-danger= prediction.stop_indicator
+  %td.next
+    = next_label_for prediction
