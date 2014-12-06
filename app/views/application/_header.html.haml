@@ -13,10 +13,9 @@
           %li= link_to 'Find a stop', london_stops_path
           
           - if signed_in?
-            %li
-              = link_to 'Settings', user_path(current_user), data: {'no-turbolinks' => true}
-            %li
-              = link_to 'Sign out', destroy_user_session_path
+            %li= link_to 'Activity', user_path(current_user)
+            %li= link_to 'Profile',  edit_user_path(current_user)
+            %li= link_to 'Sign out', destroy_user_session_path
 
           - else
             - User.omniauth_providers.each do |provider|

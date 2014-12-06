@@ -13,16 +13,16 @@
 
   %body
   
-    / Header
+    -# Header
     = render partial: 'header'
 
-    / Contents
+    -# Contents
     .container
-      / Messages
+      -# Messages
       = render partial: 'flash'
 
-      / The main content
+      -# The main content
       = yield
       
-    / Footer
+    -# Footer
     = render partial: 'footer'
