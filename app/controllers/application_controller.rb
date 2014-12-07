@@ -15,6 +15,12 @@ class ApplicationController < ActionController::Base
   
   protected
 
+  ##
+  # Redirect to the requested page after signing in
+  def after_sign_in_path_for(resource)
+    session["user_return_to"] || root_path
+  end
+
   def ensure_signup_complete
     # Ensure we don't go into an infinite loop
     return if action_name == 'finish_signup' || (controller_name == 'users' && action_name == 'update') || (controller_name == 'sessions' && action_name == 'destroy')
