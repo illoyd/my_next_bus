@@ -37,7 +37,7 @@ module ApplicationHelper
   end
   
   def favorite_toggle_button(path, toggle, options = {})
-    favorite_toggle(path, toggle, default_favorite_toggle_button_options(toggle).merge(options))
+    favorite_toggle(path, toggle, merge_favorite_toggle_button_options(toggle, options))
   end
   
   def favorite_stop_toggle(stop_sid, favorites, options = {})
@@ -52,6 +52,14 @@ module ApplicationHelper
     {
       class: (toggle ? 'favorite' : 'not-favorite')
     }
+  end
+  
+  def merge_favorite_toggle_button_options(toggle, options)
+    opt = default_favorite_toggle_button_options(toggle)
+    options = options.with_indifferent_access
+    options[:class] = [ opt[:class], options[:class] ] if options.include? :class
+    options[:style] = [ opt[:style], options[:style] ] if options.include? :style
+    opt.merge(options)
   end
   
   def stop_destination_favorite_toggle(stop, destination, favorites, options = {})

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141207115640) do
+ActiveRecord::Schema.define(version: 20141207122626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20141207115640) do
     t.integer  "minute_of_day", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "city"
   end
 
   add_index "stop_requests", ["user_id"], name: "index_stop_requests_on_user_id", using: :btree
@@ -85,6 +86,7 @@ ActiveRecord::Schema.define(version: 20141207115640) do
     t.integer  "minute_of_day", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "city"
   end
 
   add_index "trip_requests", ["user_id"], name: "index_trip_requests_on_user_id", using: :btree
