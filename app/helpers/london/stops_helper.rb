@@ -28,7 +28,7 @@ module London::StopsHelper
   def then_label_for(prediction)
     delta = ( prediction.estimated_arrival - Time.now )
     return 'due' if delta < DueThreshold
-    minutes = ( delta / 60.to_f ).round
+    minutes = ( delta / 60.to_f ).ceil
     "#{ minutes }".html_safe
   end
 

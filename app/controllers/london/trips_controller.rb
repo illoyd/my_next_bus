@@ -14,12 +14,28 @@ class London::TripsController < ApplicationController
       redirect_to (request.env["HTTP_REFERER"].present? ? :back : london_stops_path)
   end
   
+  def favorite
+    if signed_in? && favorite_params[:stop_sid].present?
+      ToggleFavoriteStopJob.new.perform(current_user, City, favorite_params[:stop_sid])
+    end
+    
+    if favorite_params[:id].present?
+      redirect_to london_trip_url(favorite_params[:id])
+    else
+      redirect_to london_stops_url
+    end
+  end
+  
   protected
   
   def record_trip_request
     if current_user
-      RecordStopRequestJob.perform_later(current_user, City, params[:id])
+      RecordTripRequestJob.perform_later(current_user, City, params[:id])
     end
+  end
+
+  def favorite_params
+    params.permit(:id, :stop_sid)
   end
 
 end

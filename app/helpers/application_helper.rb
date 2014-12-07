@@ -17,6 +17,10 @@ module ApplicationHelper
   def iconify(label, icon, options = {})
     "#{ icon(icon, options) } #{ label }".strip.html_safe
   end
+  
+  def favorite_icon(toggle)
+    icon(toggle ? :star : 'star-empty')
+  end
 
   ##
   # Create a label
@@ -27,4 +31,39 @@ module ApplicationHelper
   def photo_tag_for(user)
     image_tag(user.try(:photo_url) || image_path('default.png'), style: 'height: 30px;')
   end
+  
+  def favorite_toggle(path, toggle, options = {})
+    link_to(path, options) { favorite_icon(toggle) }
+  end
+  
+  def favorite_toggle_button(path, toggle, options = {})
+    favorite_toggle(path, toggle, default_favorite_toggle_button_options(toggle).merge(options))
+  end
+  
+  def favorite_stop_toggle(stop_sid, favorites, options = {})
+    favorite_toggle_button(
+      favorite_london_stop_path(stop_sid),
+      favorites.include?(stop_sid),
+      options
+    )
+  end
+  
+  def default_favorite_toggle_button_options(toggle)
+    {
+      class: (toggle ? 'favorite' : 'not-favorite')
+    }
+  end
+  
+  def stop_destination_favorite_toggle(stop, destination, favorites, options = {})
+    path   = favorite_london_stop_path(stop.code1, {destination: destination})
+    toggle = favorites.include?(destination)
+    favorite_toggle(path, toggle, options)
+  end
+  
+  def favorite_stop_for_line_toggle(stop, line, favorites, options = {})
+    path   = favorite_london_trip_path(line, {stop_sid: stop})
+    toggle = favorites.include?(stop)
+    favorite_toggle(path, toggle, options)
+  end
+
 end

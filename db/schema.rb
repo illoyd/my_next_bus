@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141206112927) do
+ActiveRecord::Schema.define(version: 20141207115640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,20 @@ ActiveRecord::Schema.define(version: 20141206112927) do
   add_index "favorite_destinations", ["favorite"], name: "index_favorite_destinations_on_favorite", using: :btree
   add_index "favorite_destinations", ["stop_sid"], name: "index_favorite_destinations_on_stop_sid", using: :btree
   add_index "favorite_destinations", ["user_id"], name: "index_favorite_destinations_on_user_id", using: :btree
+
+  create_table "favorite_stops", force: true do |t|
+    t.integer  "user_id",                    null: false
+    t.string   "city",                       null: false
+    t.string   "stop_sid",                   null: false
+    t.boolean  "favorite",   default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "favorite_stops", ["city"], name: "index_favorite_stops_on_city", using: :btree
+  add_index "favorite_stops", ["favorite"], name: "index_favorite_stops_on_favorite", using: :btree
+  add_index "favorite_stops", ["stop_sid"], name: "index_favorite_stops_on_stop_sid", using: :btree
+  add_index "favorite_stops", ["user_id"], name: "index_favorite_stops_on_user_id", using: :btree
 
   create_table "identities", force: true do |t|
     t.integer  "user_id"
@@ -63,6 +77,17 @@ ActiveRecord::Schema.define(version: 20141206112927) do
     t.float    "latitude"
     t.float    "longitude"
   end
+
+  create_table "trip_requests", force: true do |t|
+    t.integer  "user_id"
+    t.string   "line_name",     null: false
+    t.integer  "day_of_week",   null: false
+    t.integer  "minute_of_day", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "trip_requests", ["user_id"], name: "index_trip_requests_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"

@@ -1,6 +1,9 @@
 %tr
   %td.stop
-    = link_to prediction.stop_name, london_stop_path(prediction.stop_code1)
-    %span.label.label-danger= prediction.stop_indicator
+    - if signed_in?
+      = favorite_stop_toggle(prediction.stop_code1, current_user.favorite_stops.stop_sids, style: 'margin-right: 7px;')
+    = link_to london_stop_path(prediction.stop_code1), style:'display: block;' do
+      = prediction.stop_name
+      %span.indicator= prediction.stop_indicator
   %td.next
     = next_label_for prediction

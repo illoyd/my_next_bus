@@ -16,7 +16,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :trips, only: [:show]
+    resources :trips, only: [:show] do
+      member do
+        get :favorite
+      end
+    end
   end
   
   resources :users, only: [:show, :edit, :update]

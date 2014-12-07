@@ -31,13 +31,12 @@ class London::StopsController < ApplicationController
   end
   
   def favorite
-    if signed_in? && params[:id].present? && params[:destination].present?
-      favorite = current_user.favorite_destinations.find_or_create_by(city: City, stop_sid: params[:id], destination: params[:destination])
-      favorite.toggle!(:favorite)
+    if signed_in? && favorite_params[:destination].present?
+      ToggleFavoriteDestinationJob.new.perform(current_user, City, favorite_params[:destination])
     end
     
-    if params[:id].present?
-      redirect_to london_stop_url(params[:id])
+    if favorite_params[:id].present?
+      redirect_to london_stop_url(favorite_params[:id])
     else
       redirect_to london_stops_url
     end
@@ -49,6 +48,10 @@ class London::StopsController < ApplicationController
     if current_user
       RecordStopRequestJob.perform_later(current_user, City, params[:id])
     end
+  end
+  
+  def favorite_params
+    params.permit(:id, :destination)
   end
 
 end
