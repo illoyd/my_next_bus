@@ -6,6 +6,8 @@
           %span.sr-only Toggle navigation
           = photo_tag_for current_user
         %a.navbar-brand{:href => london_stops_path} MyNextBus
+        %button#autorefresh.hidden{ data: {autorefresh: 'hidden'}, onclick: "javascript:toggleAutorefresh();" }
+          = iconify('Auto', :time)
 
       #navbar.collapse.navbar-collapse
         %ul.nav.navbar-nav

@@ -33,6 +33,8 @@ body {
   }
 }
 
+.repaint { display: block; }
+
 // General purpose
 div.flash-flash, div.flash-info {
   @extend .alert;
@@ -79,6 +81,25 @@ a.not-favorite {
   @extend .btn-xs;
   @extend .btn-default;
   background-color: $gray;
+}
+
+button#autorefresh {
+  @extend .btn;
+  @extend .btn-default;
+  @extend .btn-sm;
+  @extend .navbar-btn;
+  
+  &.on {
+    @extend .btn-info;
+  }
+  
+  &.off {
+    background-color: $gray;
+  }
+  
+  //&[data-autorefresh="hidden"] {
+  //  @extend .hidden;
+  //}
 }
 
 span.indicator {

@@ -23,11 +23,32 @@ page_refresh_timer = null;
 // Page refresh interval, in milliseconds.
 page_refresh_interval = 15 * 1000;
 
+function toggleAutorefresh() {
+  if (page_refresh_timer != null) {
+    stopAutoRefresh();
+  } else {
+    startAutoRefresh();
+  }
+}
+
+function updateAutorefreshButton() {
+  toggle = page_refresh_timer != null;
+  class_to_add    = toggle ? 'on' : 'off';
+  class_to_remove = !toggle ? 'on' : 'off';
+
+  $("#autorefresh").addClass(class_to_add);
+  $('#autorefresh').data('autorefresh', class_to_add);
+  $("#autorefresh").removeClass(class_to_remove);
+  $("#autorefresh").removeClass('hidden');
+  console.log("Toggling refresh button: " + $('#autorefresh').data('autorefresh'));
+};
+
 // Start page refreshes
 function startAutoRefresh() {
   stopAutoRefresh();
   page_refresh_timer = setTimeout(doAutoRefresh, page_refresh_interval);
-  console.log("Started auto refresh timer.")
+  console.log("Started auto refresh timer.");
+  updateAutorefreshButton();
 };
 
 // Stop page refreshes
@@ -37,6 +58,7 @@ function stopAutoRefresh() {
     clearTimeout(page_refresh_timer);
     page_refresh_timer = null;
   }
+  updateAutorefreshButton();
 };
 
 // Perform a page refresh
