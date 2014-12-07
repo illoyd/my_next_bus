@@ -21,9 +21,16 @@
 @import "ads";
 @import "brands";
 
+$prediction-font-size: 45px;
+$prediction-then-font-size: 18px;
+
 body {
-  padding-top: $navbar-height+5px !important;
-  padding-bottom: $navbar-height+5px !important;
+  padding-top: $navbar-height+5px;
+  padding-bottom: 50px+5px;
+
+  @media (min-width: 728px) {
+    padding-bottom: 90px+5px;
+  }
 }
 
 // General purpose
@@ -85,87 +92,6 @@ p.priority-1, p.priority-2 { @extend .bg-danger; }
 p.priority-3, p.priority-4 { @extend .bg-warning; }
 p.priority-5, p.priority-6 { @extend .bg-info; }
 
-div.predictions {
-  text-align: center;
-  
-  .line { @extend .col-xs-5; }
-  .next { @extend .col-xs-3; }
-  .then { @extend .col-xs-4; }
-
-  .header {
-    @extend .row;
-    background-color: $gray-lighter;
-    
-    h2 {
-      font-size: $font-size-h4;
-      font-color: $gray;
-      margin-top: 5px;
-      margin-bottom: 5px;
-    }
-  }
-  
-  h3.destination {
-    text-align: left;
-    font-size: $font-size-h4;
-    font-color: $gray-dark;
-    padding-bottom: 4px;
-    border-bottom: 2px solid $gray-light;
-    // background-color: $gray-light;
-    
-    span.to {
-      font-color: $gray-light;
-      font-size: $font-size-h5;
-    }
-  }
-  
-  .prediction {
-    @extend .row;
-    margin-top:    1em;
-    margin-bottom: 1em;
-
-    .line {
-      text-align: center;
-
-      .line-name {
-        @extend .badge;
-        background-color: $brand-info;
-        font-size: 45px;
-        line-height: 45px;
-        min-width: 100px;
-      }
-    }
-    
-    .next {
-      font-size: 45px;
-      line-height: 45px;
-
-      .time {
-        a { color: $text-color; }
-      }
-    }
-    
-    .then {
-
-      .time {
-        @extend .badge;
-        background-color: $gray-light;
-        font-size: 18px;
-        line-height: 22px;
-      }
-    }
-  }
-  
-  .prediction.due .next .time {
-    @extend .badge;
-    font-size: 30px;
-    line-height: 45px;
-    background-color: $brand-warning;
-
-    a { color: $label-color; }
-  }
-
-}
-
 h1 {
   span.route {
     @extend .label;
@@ -187,7 +113,7 @@ h1 {
 }
 
 table.predictions {
-  th.next, td.next {
+  th.next, td.next, th.then, td.then {
     text-align: center;
   }
   
@@ -197,5 +123,63 @@ table.predictions {
   
   td.next {
     font-size: 20px;
+  }
+}
+
+table.predictions.stop {
+
+  tr.destination {
+    th {
+      text-align: left;
+      font-size: $font-size-h4;
+      // font-color: $gray-dark;
+      // padding-bottom: 4px;
+      border-top: 0px solid transparent;
+      border-bottom: 2px solid $gray-light;
+      padding-top: 18px;
+      // background-color: $gray-light;
+      
+      span.to {
+        font-color: $gray-light;
+        font-size: $font-size-h5;
+      }
+    }
+  }
+  
+  tr.prediction {
+    border: 0px solid transparent;
+    td { border: 0px solid transparent; }
+  }
+  
+  td.line {
+    // text-align: center;
+  }
+  
+  span.line {
+    @extend .badge;
+    background-color: $brand-info;
+    font-size:   $prediction-font-size;
+    line-height: $prediction-font-size;
+    min-width:   100px;
+  }
+  
+  td.next a.time {
+    font-size:   $prediction-font-size;
+    line-height: $prediction-font-size;
+    color: $text-color;
+  }
+  
+  tr.prediction.due td.next a.time {
+    @extend .badge;
+    font-size:   28px;
+    line-height: $prediction-font-size;
+    background-color: $brand-warning;
+  }
+  
+  td.then a.time {
+    @extend .badge;
+    background-color: $gray-light;
+    font-size:   $prediction-then-font-size;
+    line-height: $prediction-then-font-size + 4px;
   }
 }

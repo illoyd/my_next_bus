@@ -1,6 +1,14 @@
 - favorites = signed_in? ? current_user.favorite_destinations.favorites.destinations : []
-%h3.destination{ data: {destination: destination} }
-  - if signed_in?
-    = favorite_destination_toggle(destination, favorites, class: 'pull-left', style: 'margin-right: 7px;')
-  %span.to to
-  = destination
+%tr.destination
+  %th{colspan: 3}
+    - if signed_in?
+      = favorite_destination_toggle(destination, favorites, class: 'pull-left', style: 'margin-right: 7px;')
+    %span.to to
+    = destination
+
+-#
+  %h3.destination{ data: {destination: destination} }
+    - if signed_in?
+      = favorite_destination_toggle(destination, favorites, class: 'pull-left', style: 'margin-right: 7px;')
+    %span.to to
+    = destination

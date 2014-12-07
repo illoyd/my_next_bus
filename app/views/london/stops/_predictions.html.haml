@@ -1,0 +1,19 @@
+- favorites = signed_in? ? current_user.favorite_destinations.favorites.destinations : []
+- favorite_predictions     = predictions.select{ |p| favorites.include? p.destination }
+- not_favorite_predictions = predictions.reject{ |p| favorites.include? p.destination }
+%table.table.predictions.stop
+  %thead
+    %tr
+      %th.time
+        %time= Time.now.strftime('%a, %H:%M')
+      %th.next next
+      %th.then then
+  %tbody
+    - [ favorite_predictions, not_favorite_predictions ].each do |predictions|
+      -# First, group by destination
+      - predictions.group_by(&:destination).each do |destination, predictions_by_destination|
+        = render(partial: 'destination', object: destination)
+        
+        -# Then, group by line
+        - predictions_by_destination.group_by(&:line_name).each do |line, predictions_by_line|
+          = render(partial: 'prediction', locals: {line: line, predictions: predictions_by_line}) || render(partial: 'no_predictions')

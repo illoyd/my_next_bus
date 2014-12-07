@@ -5,10 +5,11 @@
 = render partial: 'messages', object: @statusboard.high_priority_messages
 
 .predictions
-  .header
-    %h2.line= Time.now.strftime('%a, %H:%M')
-    %h2.next next
-    %h2.then then
+  /
+    .header
+      %h2.line= Time.now.strftime('%a, %H:%M')
+      %h2.next next
+      %h2.then then
     
   - if @statusboard.stop.closed?
     = render partial: 'stop_closed'  
@@ -23,17 +24,20 @@
     = render partial: 'no_predictions'
   
   - else
-    -# Output favorites first
-    - @statusboard.predictions_by_destination_and_line.select{ |k,_| @favorites.include? k }.each do |destination, lines|
-      = render partial: 'destination', object: destination
-      - lines.each do |line, predictions|      
-        = render partial: 'prediction', locals: {line: line, predictions: predictions}
+    = render partial: 'predictions', object: @statusboard.predictions
 
-    -# And non-favorites second
-    - @statusboard.predictions_by_destination_and_line.reject{ |k,_| @favorites.include? k }.each do |destination, lines|
-      = render partial: 'destination', object: destination
-      - lines.each do |line, predictions|      
-        = render partial: 'prediction', locals: {line: line, predictions: predictions}
+    -#
+      -# Output favorites first
+      - @statusboard.predictions_by_destination_and_line.select{ |k,_| @favorites.include? k }.each do |destination, lines|
+        = render partial: 'destination', object: destination
+        - lines.each do |line, predictions|      
+          = render partial: 'prediction', locals: {line: line, predictions: predictions}
+  
+      -# And non-favorites second
+      - @statusboard.predictions_by_destination_and_line.reject{ |k,_| @favorites.include? k }.each do |destination, lines|
+        = render partial: 'destination', object: destination
+        - lines.each do |line, predictions|      
+          = render partial: 'prediction', locals: {line: line, predictions: predictions}
 
 = render partial: 'messages', object: @statusboard.non_high_priority_messages
 
