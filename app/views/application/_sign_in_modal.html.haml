@@ -1,0 +1,15 @@
+- cache do
+  #sign-in-modal.modal.fade
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} &times;
+            %span.sr-only Close
+          %h4.modal-title Sign in
+        .modal-body
+          - User.omniauth_providers.each do |provider|
+            = link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(User, provider), class: "btn btn-primary btn-block #{ provider }"
+        .modal-footer
+          %button.btn.btn-default.btn-block{"data-dismiss" => "modal", :type => "button"} Close
+          / %button.btn.btn-primary{:type => "button"} Save changes
