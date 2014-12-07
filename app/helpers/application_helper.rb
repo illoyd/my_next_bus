@@ -48,6 +48,14 @@ module ApplicationHelper
     )
   end
   
+  def favorite_destination_toggle(destination, favorites, options = {})
+    favorite_toggle_button(
+      favorite_london_destination_path(destination),
+      favorites.include?(destination),
+      options
+    )
+  end
+  
   def default_favorite_toggle_button_options(toggle)
     {
       class: (toggle ? 'favorite' : 'not-favorite')

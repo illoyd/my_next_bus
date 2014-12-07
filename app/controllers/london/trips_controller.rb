@@ -1,6 +1,4 @@
-class London::TripsController < ApplicationController
-  
-  City = 'london'
+class London::TripsController < London::Controller
   
   after_action :record_trip_request, only: [:show]
   

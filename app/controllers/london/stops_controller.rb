@@ -19,7 +19,7 @@ class London::StopsController < ApplicationController
 
   def show
     @statusboard = NotTfL::CachedBuses.new.stop(params[:id])
-    @favorites   = signed_in? ? current_user.favorites_for(City, params[:id]) : []
+    @favorites   = signed_in? ? current_user.favorite_destinations.favorites.destinations : []
     
     if @statusboard.stop
       CreateOrUpdateStopJob.perform_later(City, @statusboard.stop)

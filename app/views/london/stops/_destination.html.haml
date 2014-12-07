@@ -1,6 +1,6 @@
+- favorites = signed_in? ? current_user.favorite_destinations.favorites.destinations : []
 %h3.destination{ data: {destination: destination} }
   - if signed_in?
-    = link_to favorite_london_stop_path(@statusboard.stop.code1, {destination: destination}) do
-      = @favorites.include?(destination) ? icon(:star) : icon('star-empty')
-    %span.to to
-    = destination
+    = favorite_destination_toggle(destination, favorites, class: 'pull-left', style: 'margin-right: 7px;')
+  %span.to to
+  = destination

@@ -16,7 +16,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :trips, only: [:show] do
+    resources :trips, only: [:show]
+
+    resources :destinations, only: [] do
       member do
         get :favorite
       end
