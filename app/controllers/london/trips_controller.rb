@@ -8,10 +8,10 @@ class London::TripsController < ApplicationController
     @statusboard = NotTfL::CachedBuses.new.trip(params[:id])
     
     raise RestClient::RequestedRangeNotSatisfiable unless @statusboard.predictions.any?
-
+    
     rescue RestClient::RequestedRangeNotSatisfiable
-      flash[:error] = "Sorry, we couldn't find a trip for #{ params[:id] }!"
-      redirect_to :back
+      flash[:error] = "Sorry, we couldn't find information for that trip! The trip has most likely concluded."
+      redirect_to (request.env["HTTP_REFERER"].present? ? :back : london_stops_path)
   end
   
   protected
