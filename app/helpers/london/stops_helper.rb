@@ -22,6 +22,7 @@ module London::StopsHelper
     return 'due' if delta < DueThreshold
     minutes = ( delta / 60.to_f ).floor
     seconds = fraction_for delta.modulo(60).round, 30
+    minutes = 1 if minutes == 0 && seconds.blank?
     "#{ minutes }#{ seconds }".html_safe
   end
   
