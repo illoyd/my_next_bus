@@ -1,7 +1,8 @@
 %table.table.predictions
   %thead
     %tr
-      %th.time= Time.now.strftime('%a, %H:%M')
+      %th.time
+        %time= Time.now.strftime('%a, %H:%M')
       %th.next next
   %tbody
     = render(partial: 'prediction', collection: predictions) || render(partial: 'no_predictions')
