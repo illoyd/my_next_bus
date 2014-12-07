@@ -7,8 +7,10 @@ module London::StopsHelper
     'West'  => 'W.',
   }
   
+  DueThreshold = 45
+  
   def minutes_label_for(prediction)
-    if ( prediction.estimated_arrival - Time.now ) < 60
+    if due?(prediction)
       'due'
     else
       minutes_for(prediction)
@@ -17,7 +19,7 @@ module London::StopsHelper
   
   def next_label_for(prediction)
     delta = ( prediction.estimated_arrival - Time.now )
-    return 'due' if delta < 60
+    return 'due' if delta < DueThreshold
     minutes = ( delta / 60.to_f ).floor
     seconds = fraction_for delta.modulo(60).round, 30
     "#{ minutes }#{ seconds }".html_safe
@@ -25,7 +27,7 @@ module London::StopsHelper
   
   def then_label_for(prediction)
     delta = ( prediction.estimated_arrival - Time.now )
-    return 'due' if delta < 60
+    return 'due' if delta < DueThreshold
     minutes = ( delta / 60.to_f ).round
     "#{ minutes }".html_safe
   end
@@ -48,7 +50,7 @@ module London::StopsHelper
   end
   
   def due?(prediction)
-    ( prediction.estimated_arrival - Time.now ) < 60
+    ( prediction.estimated_arrival - Time.now ) < DueThreshold
   end
   
   def simplify_destination(prediction)
