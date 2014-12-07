@@ -11,7 +11,7 @@ class London::TripsController < ApplicationController
     
     rescue RestClient::RequestedRangeNotSatisfiable
       flash[:error] = "Sorry, we couldn't find information for that trip! The trip has most likely concluded."
-      redirect_to (request.env["HTTP_REFERER"].present? ? :back : london_stops_path)
+      redirect_to_back_or london_stops_path
   end
   
   def favorite

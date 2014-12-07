@@ -1,3 +1,5 @@
+- favorites = signed_in? ? current_user.favorite_stops.favorites.stop_sids : []
+- favorite_predictions = predictions.select{ |p| favorites.include? p.stop_code1 }
 %table.table.predictions
   %thead
     %tr
@@ -5,4 +7,10 @@
         %time= Time.now.strftime('%a, %H:%M')
       %th.next next
   %tbody
+    - if favorite_predictions.any?
+      %tr
+        %th{colspan: 2} Favorites      
+      = render(partial: 'prediction', collection: favorite_predictions)
+      %tr
+        %th{colspan: 2} Full route
     = render(partial: 'prediction', collection: predictions) || render(partial: 'no_predictions')

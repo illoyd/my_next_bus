@@ -9,6 +9,14 @@ class ApplicationController < ActionController::Base
 
   after_action :record_visit
 
+  def can_redirect_back?
+    request.env["HTTP_REFERER"].present?
+  end
+  
+  def redirect_to_back_or(path)
+    redirect_to can_redirect_back? ? :back : path
+  end
+  
   def new_session_path(scope)
     new_user_session_path
   end

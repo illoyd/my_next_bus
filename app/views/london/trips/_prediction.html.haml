@@ -1,7 +1,8 @@
+- favorites = signed_in? ? current_user.favorite_stops.favorites.stop_sids : []
 %tr
   %td.stop
     - if signed_in?
-      = favorite_stop_toggle(prediction.stop_code1, current_user.favorite_stops.stop_sids, class: 'pull-left', style: 'margin-right: 7px;')
+      = favorite_stop_toggle(prediction.stop_code1, favorites, class: 'pull-left', style: 'margin-right: 7px;')
     = link_to london_stop_path(prediction.stop_code1), style:'display: block;' do
       = prediction.stop_name
       %span.indicator= prediction.stop_indicator
