@@ -21,7 +21,7 @@ Application.addLocateToForm = (form) ->
 
   # Add locate function
   form[0].locate = () ->
-    navigator.geolocation.getCurrentPosition(this.located, this.locateFailed, {timeout: 5000}) if navigator.geolocation
+    navigator.geolocation.getCurrentPosition(this.located, this.locateFailed, {timeout: 10000, maximumAge: 30000}) if navigator.geolocation
     this
 
   # Return the form
