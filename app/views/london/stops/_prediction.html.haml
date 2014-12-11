@@ -1,15 +1,13 @@
 - predictions.sort_by!(&:estimated_arrival)
-- next_prediction, then_predictions = predictions.first, predictions[1,4]
+- next_prediction, then_prediction = predictions.first, predictions.second
 %tr.prediction{ class: ('due' if due?(next_prediction)) }
   %td.line
     %span.line= line
   %td.next
     = link_to next_label_for(next_prediction), london_trip_path(next_prediction.trip_id), class: 'time' # do
-    -# %span.time= next_label_for(next_prediction)
   %td.then
-    - then_predictions.each do |then_prediction|
+    - if then_prediction
       = link_to then_label_for(then_prediction), london_trip_path(then_prediction.trip_id), class: 'time' #do
-      -#  %span.time= 
 
 -#
   .prediction{ data: {line: line}, class: ('due' if due?(next_prediction)) }

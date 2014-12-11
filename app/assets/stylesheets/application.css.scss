@@ -23,7 +23,7 @@
 @import "autorefresh_button";
 
 $prediction-font-size: 45px;
-$prediction-then-font-size: 18px;
+$prediction-then-font-size: 35px;
 
 body {
   padding-top: $navbar-height+5px;
@@ -180,9 +180,8 @@ table.predictions.stop {
   }
   
   td.then a.time {
-    @extend .badge;
-    background-color: $gray-light;
     font-size:   $prediction-then-font-size;
-    line-height: $prediction-then-font-size + 4px;
+    line-height: $prediction-font-size;
+    color: $gray;
   }
 }
