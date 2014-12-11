@@ -1,0 +1,17 @@
+- cache @form do
+  %h1 Find a stop
+
+  = form_tag( london_stops_path, method: :get, class: 'search', role: 'form' ) do |f|
+    .group
+      = label_tag :stop, 'Enter a stop ID'
+      = telephone_field_tag :stop, nil, placeholder: "Example: 72350", autofocus: true
+    .group
+      = submit_tag 'Go!'
+
+= render partial: 'locate_form'
+
+- if @stops.any?
+  = render partial: 'nearby_stops', object: @stops
+
+- unless signed_in?
+  = render partial: 'sign_in_form'

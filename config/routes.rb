@@ -14,6 +14,9 @@ Rails.application.routes.draw do
       member do
         get :favorite
       end
+      collection do
+        get :near
+      end
     end
 
     resources :trips, only: [:show]

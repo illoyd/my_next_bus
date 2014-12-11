@@ -1,0 +1,18 @@
+button#autorefresh {
+  @extend .btn;
+  @extend .btn-default;
+  @extend .btn-sm;
+  @extend .navbar-btn;
+  
+  &.active {
+    @extend .btn-info;
+
+    span.on  { @extend .show; }
+    span.off { @extend .hidden; }
+  }
+  
+  &:not(.active) {
+    span.on  { @extend .hidden; }
+    span.off { @extend .show; }
+  }
+}

@@ -30,6 +30,14 @@ form.form {
       @extend .btn;
       @extend .btn-default;
     } // Buttons and links
+    
+    button.search {
+      @extend .btn-primary;
+    }
+
+    button.find {
+      @extend .btn-success;
+    }
 
   } // .group
 

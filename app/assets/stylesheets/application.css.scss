@@ -20,6 +20,7 @@
 @import "forms";
 @import "ads";
 @import "brands";
+@import "autorefresh_button";
 
 $prediction-font-size: 45px;
 $prediction-then-font-size: 18px;
@@ -81,25 +82,6 @@ a.not-favorite {
   @extend .btn-xs;
   @extend .btn-default;
   background-color: $gray;
-}
-
-button#autorefresh {
-  @extend .btn;
-  @extend .btn-default;
-  @extend .btn-sm;
-  @extend .navbar-btn;
-  
-  &.on {
-    @extend .btn-info;
-  }
-  
-  &.off {
-    background-color: $gray;
-  }
-  
-  //&[data-autorefresh="hidden"] {
-  //  @extend .hidden;
-  //}
 }
 
 span.indicator {

@@ -18,29 +18,33 @@
 
 
 // Page Refresh Timer - used for starting and stopping page refreshes.
-page_refresh_timer = null;
+var page_refresh_timer = null;
 
 // Page refresh interval, in milliseconds.
-page_refresh_interval = 15 * 1000;
+var page_refresh_interval = 15 * 1000;
+
+function hasAutoRefresh() {
+  return page_refresh_timer != null;
+};
 
 function toggleAutorefresh() {
-  if (page_refresh_timer != null) {
+  if (hasAutoRefresh()) {
     stopAutoRefresh();
   } else {
     startAutoRefresh();
   }
-}
+};
 
 function updateAutorefreshButton() {
-  toggle = page_refresh_timer != null;
-  class_to_add    = toggle ? 'on' : 'off';
-  class_to_remove = !toggle ? 'on' : 'off';
 
-  $("#autorefresh").addClass(class_to_add);
-  $('#autorefresh').data('autorefresh', class_to_add);
-  $("#autorefresh").removeClass(class_to_remove);
-  $("#autorefresh").removeClass('hidden');
-  console.log("Toggling refresh button: " + $('#autorefresh').data('autorefresh'));
+  if (hasAutoRefresh()) {
+    $("#autorefresh").addClass('active');
+    $("#autorefresh").removeClass('hidden');
+  } else {
+    $("#autorefresh").removeClass('active');
+  }
+
+  console.log("Toggling refresh button: " + $('#autorefresh').hasClass('active'));
 };
 
 // Start page refreshes
@@ -69,4 +73,34 @@ function doAutoRefresh() {
 };
 
 // Always turn off page refreshes when moving to a new page
-$(document).on("page:before-change", stopAutoRefresh)
+$(document).on("page:before-change", stopAutoRefresh);
+
+function geolocateMe() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(submitSearch, showError);
+  }
+};
+
+function submitSearch(results) {
+  console.log(results.coords.longitude);
+  $("#lat").val(results.coords.latitude);
+  $("#lon").val(results.coords.longitude);
+  $("#search").submit();  
+};
+
+function showError(error) {
+  switch(error.code) {
+      case error.PERMISSION_DENIED:
+          console.log("User denied the request for Geolocation.");
+          break;
+      case error.POSITION_UNAVAILABLE:
+          console.log("Location information is unavailable.");
+          break;
+      case error.TIMEOUT:
+          console.log("The request to get user location timed out.");
+          break;
+      case error.UNKNOWN_ERROR:
+          console.log("An unknown error occurred.");
+          break;
+  }
+};

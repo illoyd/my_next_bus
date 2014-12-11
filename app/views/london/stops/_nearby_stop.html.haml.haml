@@ -1,0 +1,3 @@
+= link_to london_stop_path(nearby_stop.stop_id), class: 'list-group-item' do
+  = nearby_stop.name || nearby_stop.stop_id
+  %span.label.label-danger= nearby_stop.indicator

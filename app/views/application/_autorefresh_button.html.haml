@@ -1,0 +1,6 @@
+%button#autorefresh.hidden
+  %span.on=  iconify('Auto', :refresh)
+  %span.off= iconify('Paused', :time)
+
+:javascript
+  $("#autorefresh").on('click', toggleAutorefresh)
