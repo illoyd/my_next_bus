@@ -8,13 +8,3 @@
   %td.then
     - if then_prediction
       = link_to then_label_for(then_prediction), london_trip_path(then_prediction.trip_id), class: 'time' #do
-
--#
-  .prediction{ data: {line: line}, class: ('due' if due?(next_prediction)) }
-    .line
-      .line-name= line
-    .next
-      .time= link_to next_label_for(next_prediction), london_trip_path(next_prediction.trip_id)
-    .then
-      - then_predictions.each do |then_prediction|
-        .time= link_to then_label_for(then_prediction), london_trip_path(then_prediction.trip_id)

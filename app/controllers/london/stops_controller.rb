@@ -12,6 +12,7 @@ class London::StopsController < ApplicationController
 
     # Redirect to stop view if requested
     redirect_to london_stop_url(@form.stop) if @form.stop.present?
+    redirect_to london_stop_url(params[:stop]) if params[:stop].present?
     
     if signed_in?
       predicted_stop_id = current_user.predictor.predict_now
