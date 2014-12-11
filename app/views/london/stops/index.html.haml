@@ -15,4 +15,4 @@
   = render partial: 'sign_in_form'
 
 - if signed_in?
-  = render partial: 'top_stops', object: TopStopsForUserQuery.new(current_user), locals: {predicted_stop: @predicted_stop}
+  = render partial: 'stops', object: TopStopsForUserQuery.new(current_user), locals: {title: 'Top stops for you', top_stop: @predicted_stop}
