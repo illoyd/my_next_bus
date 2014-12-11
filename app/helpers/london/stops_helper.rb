@@ -8,6 +8,7 @@ module London::StopsHelper
   }
   
   DueThreshold = 45
+  RoundingThreshold = 15
   
   def minutes_label_for(prediction)
     if due?(prediction)
@@ -17,18 +18,23 @@ module London::StopsHelper
     end
   end
   
+  def round_seconds_to_arrival(seconds)
+    seconds + seconds.modulo(RoundingThreshold)
+  end
+  
   def next_label_for(prediction)
     delta = ( prediction.estimated_arrival - Time.now )
     return 'due' if delta < DueThreshold
+    delta = round_seconds_to_arrival(delta)
     minutes = ( delta / 60.to_f ).floor
     seconds = fraction_for delta.modulo(60).round, 30
-    minutes = 1 if minutes == 0 && seconds.blank?
     "#{ minutes }#{ seconds }".html_safe
   end
   
   def then_label_for(prediction)
     delta = ( prediction.estimated_arrival - Time.now )
     return 'due' if delta < DueThreshold
+    delta = round_seconds_to_arrival(delta)
     minutes = ( delta / 60.to_f ).ceil
     "#{ minutes }".html_safe
   end
