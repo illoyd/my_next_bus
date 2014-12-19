@@ -3,40 +3,40 @@ window.Application ||= {}
 
 # Add to app
 Application.addLocateToForm = (index) ->
-  ff = this
-  console.log(ff)
+  _form = this
+  console.log(this)
 
   # Add located function
-  ff.located = (results) ->
-    $(ff).find("input[name=lat]").val(results.coords.latitude)
-    $(ff).find("input[name=lon]").val(results.coords.longitude)
-    ff.submit()
-    ff
+  this.located = (results) ->
+    $(_form).find("input[name=lat]").val(results.coords.latitude)
+    $(_form).find("input[name=lon]").val(results.coords.longitude)
+    _form.submit()
+    _form
     
   # Add locateFailed function
-  ff.locateFailed = (error) ->
+  this.locateFailed = (error) ->
     switch(error.code)
-      when error.PERMISSION_DENIED then alert("User denied the request for Geolocation.")
-      when error.POSITION_UNAVAILABLE then alert("Location information is unavailable.")
-      when error.TIMEOUT then alert("The request to get user location timed out.")
-      else alert("An unknown error occurred.")
+      when error.PERMISSION_DENIED then alert("To use the Find Me button you must allow us to access your location. Please refresh your browser and try again.")
+      when error.POSITION_UNAVAILABLE then alert("Sorry, location information is currently unavailable. Try turning on your device's Wi-Fi, GPS, or Location Services.")
+      when error.TIMEOUT then alert("Sorry, your device took a long time to locate you. Try again soon!")
+      else alert("An unknown error occurred. Try again soon!")
 
   # Add locate function
-  ff.locate = () ->
+  this.locate = () ->
     success = (results) ->
-      ff.located(results)
+      _form.located(results)
 
     failed = (error) ->
-      ff.locateFailed(error)
+      _form.locateFailed(error)
 
-    navigator.geolocation.getCurrentPosition( ff.located, ff.locateFailed, {timeout: 10000, maximumAge: 30000}) if navigator.geolocation
+    navigator.geolocation.getCurrentPosition( _form.located, _form.locateFailed, {timeout: 10000, maximumAge: 30000}) if navigator.geolocation
     this
   
   # Attach locate event to button!
-  $(ff).find("button[data-locater-button=true]").on('click', ff.locate)
+  $(_form).find("button[data-locater-button=true]").on('click', _form.locate)
 
   # Return the form
-  ff
+  _form
 
 # Update all forms 
 Application.addLocateToForms = () ->
