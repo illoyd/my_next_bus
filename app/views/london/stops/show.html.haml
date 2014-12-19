@@ -10,6 +10,8 @@
       %h2.line= Time.now.strftime('%a, %H:%M')
       %h2.next next
       %h2.then then
+      
+  = t @statusboard.stop.state, scope: 'stop.state'
     
   - if @statusboard.stop.closed?
     = render partial: 'stop_closed'  

@@ -1,0 +1,7 @@
+en:
+  stop:
+    state:
+      open: woot!
+      suspended: Suspended!
+      closed: Closed!
+      temporarily_closed: Temp closed!
