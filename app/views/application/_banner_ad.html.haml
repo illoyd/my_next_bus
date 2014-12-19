@@ -1,3 +1,19 @@
 - cache do
   #banner-ad
-    %iframe{src: ad_path, style: ''}
+    %iframe
+      :javascript
+        // General configuration
+        mopub_keywords = "london";
+        mopub_ad_width = 320;
+        mopub_ad_height = 50;
+        mopub_ad_unit = "1e3ec9f605fd45f78ae0e409f68e717c";
+
+        // Reset for tablets and up
+        if (document.width >= 728) {
+          mopub_ad_width = 728;
+          mopub_ad_height = 90;
+          mopub_ad_unit = "440768f59d3b49f3bd47665ed81589c1";
+        }
+
+      // Load ad javascript
+      %script{src: "http://ads.mopub.com/js/client/mopub.js"}
