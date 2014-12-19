@@ -1,16 +1,8 @@
 - cache do
-  = form_tag( near_london_stops_path, method: :get, class: 'form', id: 'findMe' ) do |f|
-    .group
-      = label_tag :lat, 'Latitude'
-      = text_field_tag :lat, nil, placeholder: 'lat'
-    .group
-      = label_tag :lon, 'Longitude'
-      = text_field_tag :lon, nil, placeholder: 'lon'
-    .group
-      = button_tag type: 'button', class: 'btn btn-primary', onclick: 'this.form.locate();' do
+  = form_tag( near_london_stops_path, method: :get, class: 'form search locate', data: {locater: true} ) do |f|
+    .group  
+      = hidden_field_tag :lat, nil, placeholder: 'lat'
+      = hidden_field_tag :lon, nil, placeholder: 'lon'
+      = button_tag name: 'find', type: 'button', class: 'find', data: { 'locater-button' => true } do
         = icon('map-marker')
         Find me!
-
-:javascript
-  Application.addLocateToForm($('form#findMe'));
-  $('form#findMe')[0].locate();

@@ -1,7 +1,9 @@
 - hide_if_empty ||= true
 - title ||= 'Stops'
 - top_stop ||= nil
+- latitude  ||= nil
+- longitude ||= nil
 - if !hide_if_empty || stops.any?
   .panel.panel-default
     .panel-heading= title
-    .list-group= render partial: 'stop', collection: stops, locals: { top_stop: top_stop }
+    .list-group= render partial: 'stop', collection: stops, locals: { top_stop: top_stop, latitude: latitude, longitude: longitude }

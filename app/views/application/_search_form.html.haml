@@ -1,0 +1,10 @@
+- search_form ||= 72350
+- cache search_form do
+  = form_tag( london_stops_path, method: :get, class: 'form search big', role: 'form' ) do |f|
+    .group
+      = label_tag :stop, 'Enter a stop ID'
+      = telephone_field_tag :stop, nil, placeholder: "Example: #{ search_form }", autofocus: true
+    .group
+      = button_tag name: 'go', class: 'search' do
+        = icon(:search)
+        Go!

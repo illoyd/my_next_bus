@@ -45,6 +45,10 @@ class London::StopsController < ApplicationController
     end
     
     respond_with @stops
+
+    rescue RestClient::RequestedRangeNotSatisfiable
+      flash[:error] = "Sorry, we couldn't find any nearby stops!"
+      redirect_to london_stops_path
   end
   
   def favorite

@@ -21,7 +21,7 @@ form.form {
       @extend .form-control;
     } // Inputs
     
-    input[type=submit] {
+    input[type=submit], button[type=submit] {
       @extend .btn;
       @extend .btn-primary;
     } // Submit button
@@ -36,7 +36,7 @@ form.form {
     }
 
     button.find {
-      @extend .btn-success;
+      @extend .btn-info;
     }
 
   } // .group
@@ -116,3 +116,5 @@ form.inline {
 
   } // .group
 }
+
+// Search forms

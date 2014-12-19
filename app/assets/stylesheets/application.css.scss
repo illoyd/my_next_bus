@@ -185,3 +185,37 @@ table.predictions.stop {
     color: $gray;
   }
 }
+
+// Search
+div.search.small {
+  @extend .row;
+  @extend .well;
+  @extend .well-sm;
+  
+  .input-group {
+    @extend .input-group-sm;
+  }
+  
+  button {
+    @extend .btn;
+    @extend .btn-sm;
+    @extend .btn-block;
+  }
+  
+  button.find {
+    @extend .btn-sm;
+  }
+  
+  button[type=submit] {
+    @extend .btn-primary;
+  }
+  
+  form.search.stop {
+    @extend .col-xs-9;
+  }
+  
+  form.search.locate {
+    @extend .col-xs-3;
+  }
+  
+}
