@@ -4,7 +4,7 @@ window.Application ||= {}
 # Add to app
 Application.addLocateToForm = (index) ->
   _form = this
-  console.log(this)
+  # console.log(this)
 
   # Add located function
   this.located = (results) ->

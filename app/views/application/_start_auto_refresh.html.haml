@@ -1,3 +1,10 @@
 - cache do
-  :javascript
-    startAutoRefresh();
+  :coffeescript
+    # Force refresh timer to stop if running
+    if Application.refresh_timer?.hasTimer()
+      console.log('Terminating an existing refresh timer')
+      Application.refresh_timer.stop()
+
+    # Create a new refresh timer
+    Application.refresh_timer = new Application.RefreshTimer(location.toString(), 15, $('#autorefresh'))
+    Application.refresh_timer.start()

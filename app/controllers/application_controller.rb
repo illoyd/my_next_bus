@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :ensure_signup_complete, only: [:new, :create, :update, :destroy]
+  before_action :ensure_signup_complete, only: [:new, :create, :update, :destroy]
   
-  before_action :predict_stop
+  before_action :assign_stop_suggester
 
   after_action :record_visit
 
@@ -43,11 +43,8 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def predict_stop
-    if signed_in? && ActiveSessionTracker.new(current_user).new_session?
-      record_visit
-      redirect_to london_stop_path(current_user.predictor.predict_now)
-    end
+  def assign_stop_suggester
+    @stop_suggester = StopSuggester.new(current_user)
   end
   
   def record_visit
