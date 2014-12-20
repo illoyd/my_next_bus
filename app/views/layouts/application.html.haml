@@ -7,6 +7,7 @@
     = javascript_include_tag "//www.google.com/jsapi", "chartkick"
     = csrf_meta_tags
     %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+    = render partial: 'favicons'
     :javascript
       Turbolinks.enableProgressBar();
       google.load("visualization", "1", {packages:["corechart", "timeline"]});
@@ -15,6 +16,9 @@
   
     -# Header
     = render partial: 'header'
+
+    -# Prediction banner
+    = render partial: 'suggestion_banner'
 
     -# Contents
     .container

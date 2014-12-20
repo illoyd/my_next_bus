@@ -6,6 +6,7 @@ class NotTfL::Buses
   FIELDS            = ( STOP_FIELDS + PREDICTION_FIELDS + MESSAGE_FIELDS ).uniq
   
   STOP_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState LineID LineName DestinationText TripID EstimatedTime ExpireTime MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
+  NEAR_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState Latitude Longitude )
   TRIP_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState LineID LineName DestinationText TripID EstimatedTime ExpireTime MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
   
   def initialize
@@ -30,6 +31,14 @@ class NotTfL::Buses
       'ReturnList' => TRIP_DEFAULT_FIELDS.join(','),
       'StopAlso' => true
     ), STOP_DEFAULT_FIELDS)
+  end
+  
+  def near(latitude, longitude, radius = 1000)
+    transform(get(
+      'Circle' => "#{ latitude },#{ longitude },#{ radius }",
+      'ReturnList' => NEAR_DEFAULT_FIELDS.join(','),
+      'StopAlso' => true
+    ), NEAR_DEFAULT_FIELDS)
   end
   
   protected

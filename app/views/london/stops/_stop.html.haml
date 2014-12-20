@@ -1,0 +1,12 @@
+- top_stop  ||= nil
+- latitude  ||= nil
+- longitude ||= nil
+= link_to london_stop_path(stop.stop_id), class: 'list-group-item' do
+  = stop.name || stop.stop_id
+  %span.label.label-danger= stop.indicator
+
+  - if stop == top_stop
+    %span.label.label-info Top!
+
+  - if stop.try(:latitude).present? && stop.try(:longitude).present? && latitude.present? && longitude.present?
+    %span.badge= distance_between([stop.latitude, stop.longitude], [latitude, longitude])
