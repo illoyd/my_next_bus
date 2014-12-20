@@ -1,0 +1,32 @@
+- if @stop_suggester.show?
+  - suggestion_id    = "suggestion-#{ @stop_suggester.stop.stop_id }"
+  - suggestion_go_id = "#{ suggestion_id }-go"
+  - suggestion_no_id = "#{ suggestion_id }-no"
+  - suggestion_url   = london_stop_path(@stop_suggester.stop.stop_id)
+  
+  - cache @stop_suggester do
+    .suggestion{ id: suggestion_id }
+      %p
+        Want to go to #{ link_to @stop_suggester.stop.name, suggestion_url, class: 'link' } <span class="indicator">#{ @stop_suggester.stop.indicator }</span> ?
+        
+        %span.pull-right
+          = link_to suggestion_url, id: suggestion_go_id, class: ['btn btn-go', ('with-counter' if @stop_suggester.redirect?)] do
+            Go! <span class="counter-ui">(<span class="counter"></span>)</span>
+          
+          - if @stop_suggester.redirect?
+            = button_tag type: 'button', id: suggestion_no_id, class: 'btn btn-no' do
+              Nope!
+
+            :coffeescript
+              # Force refresh timer to stop if running
+              if Application.suggestion_timer?.hasTimer()
+                console.log('Terminating an existing suggestion timer')
+                Application.suggestion_timer.stop()
+          
+              # Create a new refresh timer
+              Application.suggestion_timer = new Application.SuggestionTimer('#{ suggestion_url }', 10, $('##{ suggestion_go_id }'), $('##{ suggestion_no_id }'))
+              Application.suggestion_timer.start()
+              
+              # Create a closer
+              $('##{ suggestion_no_id }').click ->
+                $('##{ suggestion_id }').fadeOut()
