@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
   def predictor
     @predictor ||= Predictors::Cache.predictor_for(self)
   end
-  
+
   def favorites_for(city, stop_sid)
     favorite_destinations.where(city: city, stop_sid: stop_sid, favorite: true).distinct.pluck(:destination)
   end

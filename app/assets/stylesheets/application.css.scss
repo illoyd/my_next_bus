@@ -219,3 +219,37 @@ div.search.small {
   }
   
 }
+
+div.suggestion {
+  @extend .container;
+  @extend .bg-warning;
+  
+  p {
+    @extend .text-warning;
+    margin: 4px 0;
+    padding: 6px 0;
+    line-height: 30px;
+
+    a.link {
+      font-weight: bold;
+      color: $brand-warning;
+    }
+
+    button.btn, a.btn {
+      @extend .btn-sm;
+    }
+    
+    a.btn-go, button.btn-go {
+      @extend .btn-warning;
+      
+      &:not(.with-counter) span.counter-ui {
+        @extend .hidden;
+      }
+    }
+
+    a.btn-no, button.btn-no {
+      margin-left: 4px;
+      @extend .btn-default;
+    }
+  }  
+}
