@@ -53,7 +53,8 @@ class Application.LocationTimer
       this.stop()
       Turbolinks.visit(@url)
 
-
+##
+# Refresh Timer is used to visit a given page and to control the timer through a single button.
 class Application.RefreshTimer extends Application.LocationTimer
 
   constructor: (@url, @interval, @control) ->
@@ -78,7 +79,8 @@ class Application.RefreshTimer extends Application.LocationTimer
   updateCounter: () ->
     @control.find("span.counter")[0].innerText = @secondsRemaining
 
-
+##
+# Suggestion Timer visits a given page and has one control with the countdown and another to stop.
 class Application.SuggestionTimer extends Application.LocationTimer
 
   constructor: (@url, @interval, @go_control, @stop_control) ->
