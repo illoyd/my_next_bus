@@ -1,4 +1,5 @@
 class NotTfL::Stop < Hashie::Trash
+  include Hashie::Extensions::Dash::IndifferentAccess
   
   ShowableStopTypes = %w( STBR STBC STZZ STBN STBS STSS STVA SLRS )
 

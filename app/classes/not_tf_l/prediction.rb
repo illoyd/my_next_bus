@@ -1,4 +1,5 @@
 class NotTfL::Prediction < Hashie::Trash
+  include Hashie::Extensions::Dash::IndifferentAccess
   
   property :stop_name,         from: 'StopPointName'
   property :stop_id,           from: 'StopID'
