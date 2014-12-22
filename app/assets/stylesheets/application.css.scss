@@ -199,7 +199,7 @@ div.search.small {
   button {
     @extend .btn;
     @extend .btn-sm;
-    @extend .btn-block;
+    // @extend .btn-block;
   }
   
   button.find {
@@ -211,11 +211,11 @@ div.search.small {
   }
   
   form.search.stop {
-    @extend .col-xs-9;
+    // @extend .col-xs-9;
   }
   
   form.search.locate {
-    @extend .col-xs-3;
+    // @extend .col-xs-3;
   }
   
 }
