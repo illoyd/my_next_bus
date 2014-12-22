@@ -5,7 +5,9 @@ class Predictors::Predictor
   ##
   # Create a new Predictor trained for the given user.
   def self.train_for(user)
-    new.train_for(user)
+    new.tap do |p|
+      p.train_for(user)
+    end
   end
   
   ##
@@ -26,6 +28,9 @@ class Predictors::Predictor
   def predict(day_of_week, minute_of_day)
     return nil if @predictor.nil?
     @predictor.eval([day_of_week, minute_of_day])
+    
+    rescue Ai4r::Classifiers::ModelFailureError
+      return nil
   end
   
   ##
@@ -35,6 +40,12 @@ class Predictors::Predictor
     day_of_week   = timestamp.wday
     minute_of_day = timestamp.hour * 60 + timestamp.min
     predict(day_of_week, minute_of_day)
+  end
+  
+  ##
+  # Prepare the predictor for caching
+  def prepare_for_caching
+    @predictor.instance_variable_set(:@data_set, nil)
   end
   
 end

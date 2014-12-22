@@ -14,11 +14,12 @@ class Predictors::Cache
   end
   
   def self.set_predictor_for(user, predictor, expire_after = DefaultExpiry)
+    predictor.prepare_for_caching
     Redis.current.setex(cache_key_for(user), expire_after, Marshal.dump(predictor))
   end
   
   def self.build_predictor_for(user)
-    Predictors::IB1.train_for(user)
+    Predictors::ID3.train_for(user)
     
     rescue ArgumentError
       Predictors::Nil.new
