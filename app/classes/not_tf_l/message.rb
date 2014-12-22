@@ -2,7 +2,7 @@ class NotTfL::Message < Hashie::Trash
   include Hashie::Extensions::Dash::IndifferentAccess
 
   property :stop_name,         from: 'StopPointName'
-  property :stop_id,           from: 'StopID'
+  property :stop_sid,          from: 'StopID'
   property :stop_code1,        from: 'StopCode1'
   property :stop_code2,        from: 'StopCode2'
   property :stop_type,         from: 'StopPointType'

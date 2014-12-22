@@ -25,7 +25,7 @@ class StopSuggester
   
   def stop
     return nil unless prediction?
-    @stop ||= TransitStop.create_with(name: prediction).find_or_create_by(stop_id: prediction)
+    @stop ||= TransitStop.create_with(name: prediction).find_or_create_by(stop_sid: prediction)
   end
   
   def stop?

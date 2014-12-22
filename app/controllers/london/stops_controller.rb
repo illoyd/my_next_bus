@@ -11,8 +11,8 @@ class London::StopsController < ApplicationController
     redirect_to london_stop_url(params[:stop]) if params[:stop].present?
     
     if signed_in?
-      predicted_stop_id = current_user.predictor.predict_now
-      @predicted_stop = TransitStop.find_by(stop_id: predicted_stop_id) if predicted_stop_id
+      predicted_stop_sid = current_user.predictor.predict_now
+      @predicted_stop = TransitStop.find_by(stop_sid: predicted_stop_sid) if predicted_stop_sid
     end
 
     # Otherwise just present form!

@@ -11,8 +11,8 @@ class NotTfL::CachedBuses < NotTfL::Buses
     response
   end
   
-  def get_cache(stop_id)
-    Redis.current.get( cache_key(stop_id) )
+  def get_cache(stop_sid)
+    Redis.current.get( cache_key(stop_sid) )
   end
 
   def set_cache(query, response)

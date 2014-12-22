@@ -16,7 +16,7 @@ class Predictors::Policy
   end
   
   def stop
-    @stop ||= TransitStop.create_with(name: prediction).find_or_create_by(stop_id: prediction)
+    @stop ||= TransitStop.create_with(name: prediction).find_or_create_by(stop_sid: prediction)
   end
   
 end

@@ -1,8 +1,8 @@
 - top_stop  ||= nil
 - latitude  ||= nil
 - longitude ||= nil
-= link_to london_stop_path(stop.stop_id), class: 'list-group-item' do
-  = stop.name || stop.stop_id
+= link_to london_stop_path(stop.stop_sid), class: 'list-group-item' do
+  = stop.name || stop.stop_sid
   %span.label.label-danger= stop.indicator
 
   - if stop == top_stop

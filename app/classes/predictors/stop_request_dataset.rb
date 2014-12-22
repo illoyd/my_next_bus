@@ -11,7 +11,7 @@ class Predictors::StopRequestDataset
   protected
   
   def self.default_data_labels
-    %w( day_of_week minute_of_day stop_id )
+    %w( day_of_week minute_of_day stop_sid )
   end
 
 end

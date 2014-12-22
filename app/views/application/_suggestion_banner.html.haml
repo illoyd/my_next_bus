@@ -1,8 +1,8 @@
-- if stop_suggester.show? && stop_suggester.try(:stop).try(:stop_id) != @statusboard.try(:stop).try(:stop_id)
-  - suggestion_id    = "suggestion-#{ stop_suggester.stop.stop_id }"
+- if stop_suggester.show? && stop_suggester.try(:stop).try(:stop_sid) != @statusboard.try(:stop).try(:stop_sid)
+  - suggestion_id    = "suggestion-#{ stop_suggester.stop.stop_sid }"
   - suggestion_go_id = "#{ suggestion_id }-go"
   - suggestion_no_id = "#{ suggestion_id }-no"
-  - suggestion_url   = london_stop_path(stop_suggester.stop.stop_id)
+  - suggestion_url   = london_stop_path(stop_suggester.stop.stop_sid)
   
   - cache stop_suggester do
     .suggestion{ id: suggestion_id }

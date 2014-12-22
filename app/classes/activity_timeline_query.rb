@@ -1,7 +1,7 @@
 class ActivityTimelineQuery < SimpleDelegator
 
   def initialize(base = StopRequest, window = 8.weeks.ago)
-    __setobj__ base.where('created_at >= ?', window).order('day_of_week, stop_id, minute_of_day')
+    __setobj__ base.where('created_at >= ?', window).order('day_of_week, stop_sid, minute_of_day')
   end
   
   def self.for(user)
@@ -23,11 +23,11 @@ class ActivityTimelineQuery < SimpleDelegator
   end
   
   class Entry
-    attr_reader :day_of_week, :stop_id, :start_minute_of_day, :end_minute_of_day
+    attr_reader :day_of_week, :stop_sid, :start_minute_of_day, :end_minute_of_day
 
     def initialize(request)
       @day_of_week         = request.day_of_week
-      @stop_id             = request.stop_id
+      @stop_sid            = request.stop_sid
       @start_minute_of_day = request.minute_of_day
       @end_minute_of_day   = request.minute_of_day
     end
@@ -62,7 +62,7 @@ class ActivityTimelineQuery < SimpleDelegator
     
     def contiguous?(request)
       request.day_of_week == @day_of_week &&
-        request.stop_id == @stop_id &&
+        request.stop_sid == @stop_sid &&
         request.minute_of_day <= (@end_minute_of_day + 2)
     end
     
@@ -71,7 +71,7 @@ class ActivityTimelineQuery < SimpleDelegator
     end
     
     def to_a
-      [ weekday, stop_id, start_time, end_time ]
+      [ weekday, stop_sid, start_time, end_time ]
     end
     
     def hour_from_minutes(minutes)

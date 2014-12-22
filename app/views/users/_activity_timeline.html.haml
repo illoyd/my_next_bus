@@ -6,7 +6,7 @@
     var data = google.visualization.arrayToDataTable([
     ['Weekday', 'Stop', 'Start', 'End'],
     - statistics.each do |data_point|
-      ['#{ data_point.weekday }', '#{ data_point.stop_id }', new Date(0, 0, 0, #{ data_point.starting_hour }, #{ data_point.starting_minute }, 0), new Date(0, 0, 0, #{ data_point.ending_hour }, #{ data_point.ending_minute }, 0)],
+      ['#{ data_point.weekday }', '#{ data_point.stop_sid }', new Date(0, 0, 0, #{ data_point.starting_hour }, #{ data_point.starting_minute }, 0), new Date(0, 0, 0, #{ data_point.ending_hour }, #{ data_point.ending_minute }, 0)],
     ]);
   
     var options = {

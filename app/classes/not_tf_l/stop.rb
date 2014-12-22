@@ -35,6 +35,6 @@ class NotTfL::Stop < Hashie::Trash
   
   delegate :open?, :temporarily_closed?, :closed?, :suspended?, to: :state
   
-  alias_method :stop_id, :code1
+  alias_method :stop_sid, :code1
 
 end

@@ -17,17 +17,17 @@ class NotTfL::Buses
     RestClient.get(BASE_URI, params: base_query.merge(query))
   end
   
-  def stop(stop_id)
+  def stop(stop_sid)
     transform(get(
-      'StopCode1' => stop_id,
+      'StopCode1' => stop_sid,
       'ReturnList' => STOP_DEFAULT_FIELDS.join(','),
       'StopAlso' => true
     ), STOP_DEFAULT_FIELDS)
   end
   
-  def trip(stop_id)
+  def trip(trip_sid)
     transform(get(
-      'TripID' => stop_id,
+      'TripID' => trip_sid,
       'ReturnList' => TRIP_DEFAULT_FIELDS.join(','),
       'StopAlso' => true
     ), STOP_DEFAULT_FIELDS)
