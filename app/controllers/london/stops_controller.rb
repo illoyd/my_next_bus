@@ -7,17 +7,12 @@ class London::StopsController < ApplicationController
   respond_to :html
   
   def index
-    # Get search forms
-    @form = StopsForm.new(stops_form_params)
-
     # Redirect to stop view if requested
-    redirect_to london_stop_url(@form.stop) if @form.stop.present?
     redirect_to london_stop_url(params[:stop]) if params[:stop].present?
     
     if signed_in?
       predicted_stop_id = current_user.predictor.predict_now
       @predicted_stop = TransitStop.find_by(stop_id: predicted_stop_id) if predicted_stop_id
-      @form.predicted_stop_sid = predicted_stop_id
     end
 
     # Otherwise just present form!
@@ -35,6 +30,11 @@ class London::StopsController < ApplicationController
     rescue RestClient::RequestedRangeNotSatisfiable
       flash[:error] = "Sorry, we couldn't find a stop for #{ params[:id] }!"
       redirect_to london_stops_path
+    
+    rescue SocketError
+      flash[:error] = "Sorry, we are unable to get predictions at this time. Please try again."
+      redirect_to london_stops_path
+
   end
   
   def near
@@ -69,10 +69,6 @@ class London::StopsController < ApplicationController
   
   def favorite_params
     params.permit(:id)
-  end
-  
-  def stops_form_params
-    params.permit(:stops_form).permit(:stop, :lat, :lon)
   end
   
   def near_params
