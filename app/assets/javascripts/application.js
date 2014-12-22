@@ -15,34 +15,3 @@
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .
-
-
-function geolocateMe() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(submitSearch, showError);
-  }
-};
-
-function submitSearch(results) {
-  console.log(results.coords.longitude);
-  $("#lat").val(results.coords.latitude);
-  $("#lon").val(results.coords.longitude);
-  $("#search").submit();  
-};
-
-function showError(error) {
-  switch(error.code) {
-      case error.PERMISSION_DENIED:
-          console.log("User denied the request for Geolocation.");
-          break;
-      case error.POSITION_UNAVAILABLE:
-          console.log("Location information is unavailable.");
-          break;
-      case error.TIMEOUT:
-          console.log("The request to get user location timed out.");
-          break;
-      case error.UNKNOWN_ERROR:
-          console.log("An unknown error occurred.");
-          break;
-  }
-};
