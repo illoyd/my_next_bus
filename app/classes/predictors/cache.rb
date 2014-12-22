@@ -19,7 +19,7 @@ class Predictors::Cache
   end
   
   def self.build_predictor_for(user)
-    Predictors::ID3.train_for(user)
+    Predictors::IB1.train_for(user)
     
     rescue ArgumentError
       Predictors::Nil.new

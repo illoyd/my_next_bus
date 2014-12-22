@@ -5,5 +5,9 @@ class Predictors::IB1 < Predictors::Predictor
     @predictor.build(dataset)
     self
   end
+  
+  def prepare_for_caching
+    # Do nothing
+  end
 
 end
