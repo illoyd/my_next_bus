@@ -26,19 +26,6 @@
   - else
     = render partial: 'predictions', object: @statusboard.predictions
 
-    -#
-      -# Output favorites first
-      - @statusboard.predictions_by_destination_and_line.select{ |k,_| @favorites.include? k }.each do |destination, lines|
-        = render partial: 'destination', object: destination
-        - lines.each do |line, predictions|      
-          = render partial: 'prediction', locals: {line: line, predictions: predictions}
-  
-      -# And non-favorites second
-      - @statusboard.predictions_by_destination_and_line.reject{ |k,_| @favorites.include? k }.each do |destination, lines|
-        = render partial: 'destination', object: destination
-        - lines.each do |line, predictions|      
-          = render partial: 'prediction', locals: {line: line, predictions: predictions}
-
 = render partial: 'messages', object: @statusboard.non_high_priority_messages
 
 / Start autorefresh

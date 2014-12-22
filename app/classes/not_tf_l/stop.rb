@@ -20,8 +20,17 @@ class NotTfL::Stop < Hashie::Trash
     !(state.closed? || state.suspended?)
   end
   
-  def show_stop?
-    ShowableStopTypes.include?(type)
+  def show?
+    ShowableStopTypes.include?(type) && (id.present? || code1.present? || code2.present?)
+  end
+  
+  def distance_between(other_point)
+    other_point = other_point.point if other_point.respond_to?(:point)
+    self.point.distance_between(other_point)
+  end
+  
+  def point
+    @point ||= NotTfL::Point.new(latitude, longitude)
   end
   
   delegate :open?, :temporarily_closed?, :closed?, :suspended?, to: :state

@@ -1,19 +1,19 @@
-- if @stop_suggester.show? && @stop_suggester.try(:stop).try(:stop_id) != @statusboard.try(:stop).try(:stop_id)
-  - suggestion_id    = "suggestion-#{ @stop_suggester.stop.stop_id }"
+- if stop_suggester.show? && stop_suggester.try(:stop).try(:stop_id) != @statusboard.try(:stop).try(:stop_id)
+  - suggestion_id    = "suggestion-#{ stop_suggester.stop.stop_id }"
   - suggestion_go_id = "#{ suggestion_id }-go"
   - suggestion_no_id = "#{ suggestion_id }-no"
-  - suggestion_url   = london_stop_path(@stop_suggester.stop.stop_id)
+  - suggestion_url   = london_stop_path(stop_suggester.stop.stop_id)
   
-  - cache @stop_suggester do
+  - cache stop_suggester do
     .suggestion{ id: suggestion_id }
       %p
-        Want to go to #{ link_to @stop_suggester.stop.name, suggestion_url, class: 'link' } <span class="indicator">#{ @stop_suggester.stop.indicator }</span> ?
+        Want to go to #{ link_to stop_suggester.stop.name, suggestion_url, class: 'link' } <span class="indicator">#{ stop_suggester.stop.indicator }</span> ?
         
         %span.pull-right
-          = link_to suggestion_url, id: suggestion_go_id, class: ['btn btn-go', ('with-counter' if @stop_suggester.redirect?)] do
+          = link_to suggestion_url, id: suggestion_go_id, class: ['btn btn-go', ('with-counter' if stop_suggester.redirect?)] do
             Go! <span class="counter-ui">(<span class="counter"></span>)</span>
           
-          - if @stop_suggester.redirect?
+          - if stop_suggester.redirect?
             = button_tag type: 'button', id: suggestion_no_id, class: 'btn btn-no' do
               Nope!
 

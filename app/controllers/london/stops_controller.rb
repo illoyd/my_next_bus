@@ -43,7 +43,10 @@ class London::StopsController < ApplicationController
     else
       []
     end
-    
+
+    # Sort stops by distance if available
+    @stops = @stops.sort_by { |s| current_point.distance_between(s.point) } if current_point?
+
     respond_with @stops
 
     rescue RestClient::RequestedRangeNotSatisfiable
@@ -52,18 +55,8 @@ class London::StopsController < ApplicationController
   end
   
   def favorite
-#     if signed_in? && favorite_params[:destination].present?
-#       ToggleFavoriteDestinationJob.new.perform(current_user, City, favorite_params[:destination])
-#     end
-
     ToggleFavoriteStopJob.new.perform(current_user, City, params[:id]) if signed_in?
     redirect_to_back_or london_stop_path(params[:id])
-    
-#     if favorite_params[:id].present?
-#       redirect_to london_stop_url(favorite_params[:id])
-#     else
-#       redirect_to london_stops_url
-#     end
   end
   
   protected

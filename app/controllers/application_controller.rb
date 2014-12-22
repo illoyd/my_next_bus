@@ -4,9 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :ensure_signup_complete, only: [:new, :create, :update, :destroy]
-  
-  before_action :assign_stop_suggester
-
   after_action :record_visit
 
   def can_redirect_back?
@@ -21,6 +18,28 @@ class ApplicationController < ActionController::Base
     new_user_session_path
   end
   
+  def stop_suggester
+    @stop_suggester ||= StopSuggester.new(current_user)
+  end
+  
+  def stop_suggester?
+    @stop_suggester.present?
+  end
+  
+  def current_point
+    if params[:lat].present? && params[:lon].present?
+      @current_point ||= NotTfL::Point.new(params[:lat], params[:lon])
+    else
+      @current_point = nil
+    end
+  end
+  
+  def current_point?
+    @current_point.present?
+  end
+  
+  helper_method :stop_suggester, :stop_suggester?, :current_point, :current_point?
+
   protected
 
   ##
@@ -43,14 +62,10 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def assign_stop_suggester
-    @stop_suggester = StopSuggester.new(current_user)
-  end
-  
   def record_visit
     if signed_in?
       ActiveSessionTracker.new(current_user).record_visit
     end
   end
-
+  
 end
