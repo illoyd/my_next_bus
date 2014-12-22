@@ -11,8 +11,5 @@
 - if @stops.stops.any?
   = render partial: 'stops', object: @stops.stops.reject{ |s| s.code1.nil? }, locals: { title: 'Nearby stops for you', hide_if_empty: false, latitude: params[:lat], longitude: params[:lon] }
 
-- else
-  = render partial: 'locate_form'
-
 - unless signed_in?
   = render partial: 'sign_in_form'

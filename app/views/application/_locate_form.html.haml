@@ -1,8 +1,4 @@
 - cache do
-  = form_tag( near_london_stops_path, method: :get, class: 'form search locate', data: {locater: true} ) do |f|
-    .group  
-      = hidden_field_tag :lat, nil, placeholder: 'lat'
-      = hidden_field_tag :lon, nil, placeholder: 'lon'
-      = button_tag name: 'find', type: 'button', class: 'find', data: { 'locater-button' => true } do
-        = icon('map-marker')
-        Near me!
+  = form_tag( near_london_stops_path, method: :get, id: 'geolocater', class: 'hidden', data: {locater: true} ) do |f|
+    = hidden_field_tag :lat, nil
+    = hidden_field_tag :lon, nil
