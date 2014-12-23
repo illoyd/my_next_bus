@@ -33,7 +33,7 @@ class NotTfL::Buses
     ), STOP_DEFAULT_FIELDS)
   end
   
-  def near(latitude, longitude, radius = 1000)
+  def near(latitude, longitude, radius = 250)
     transform(get(
       'Circle' => "#{ latitude },#{ longitude },#{ radius }",
       'ReturnList' => NEAR_DEFAULT_FIELDS.join(','),
