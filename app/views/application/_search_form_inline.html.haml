@@ -1,12 +1,13 @@
 - search_form_inline ||= 72350
 - cache search_form_inline do
-  = form_tag( london_stops_path, method: :get, class: 'form search stop' ) do |f|
+  = form_tag( london_stops_path, method: :get, class: 'form search' ) do |f|
     .group
       = label_tag :stop, 'Enter a stop ID'
       .input-group
-        = text_field_tag :stop, nil, placeholder: "Example: #{ search_form_inline }"
+        .input-group-btn
+          = render partial: 'near_button'
+        = telephone_field_tag :stop, nil, placeholder: "Example: #{ search_form_inline }"
         .input-group-btn
           = button_tag do
             = icon(:search)
             Go!
-          = render partial: 'near_button'
