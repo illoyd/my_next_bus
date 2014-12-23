@@ -1,5 +1,5 @@
 - top_stop  ||= nil
-- cache stop, current_point do
+- cache [stop, current_point] do
   = link_to london_stop_path(stop.stop_sid), class: 'list-group-item' do
     = stop.name || stop.stop_sid
     %span.label.label-danger= stop.indicator

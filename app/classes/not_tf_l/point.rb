@@ -26,5 +26,9 @@ class NotTfL::Point
   
     EARTH_RADIUS_IN_M * c # Delta in meters
   end
+  
+  def cache_key
+    "#{ @lat },#{ @lon }"
+  end
 
 end
