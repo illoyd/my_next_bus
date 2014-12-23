@@ -11,7 +11,7 @@ class NotTfL::Point
   end
   
   def to_radians
-    new(lat * RAD_PER_DEG, lon * RAD_PER_DEG)
+    self.class.new(lat * RAD_PER_DEG, lon * RAD_PER_DEG)
   end
   
   def distance_between(other)
