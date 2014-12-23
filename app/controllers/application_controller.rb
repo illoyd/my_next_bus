@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
   
   def stop_suggester?
-    @stop_suggester.present?
+    stop_suggester.present?
   end
   
   def current_point
@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
   
   def current_point?
-    @current_point.present?
+    current_point.present?
   end
   
   helper_method :stop_suggester, :stop_suggester?, :current_point, :current_point?
