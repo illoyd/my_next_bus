@@ -45,7 +45,7 @@ class London::StopsController < ApplicationController
     end
 
     # Sort stops by distance if available
-    @stops = @stops.sort_by { |s| current_point.distance_between(s.point) } if current_point?
+    @stops.stops.sort_by! { |s| current_point.distance_between(s.point) } if current_point?
 
     respond_with @stops
 
