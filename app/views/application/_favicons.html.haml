@@ -1,4 +1,24 @@
 - cache do
-  %link{ rel: "apple-touch-icon-precomposed", href: image_path('favicon-152.png') }
-  %link{ rel: "msapplication-TileColor",      href: '##93C54B' }
-  %link{ rel: "msapplication-TileImage",      href: image_path('favicon-144.png') }
+  -# Favicon
+  %link{ rel: "icon",                         href: image_path("favicon.ico") }/
+
+  -# For iPad with high-resolution Retina display running iOS ? 7:
+  %link{ rel: "apple-touch-icon-precomposed", href: image_path('favicon-152.png'), :sizes => "152x152" }/
+  -# For iPad with high-resolution Retina display running iOS ? 6:
+  %link{ rel: "apple-touch-icon-precomposed", href: image_path('favicon-144.png'), :sizes => "144x144" }/
+  -# For iPhone with high-resolution Retina display running iOS ? 7:
+  %link{ rel: "apple-touch-icon-precomposed", href: image_path('favicon-120.png'), :sizes => "120x120" }/
+  -# For iPhone with high-resolution Retina display running iOS ? 6:
+  %link{ rel: "apple-touch-icon-precomposed", href: image_path('favicon-114.png'), :sizes => "114x114" }/
+  -# For first- and second-generation iPad:
+  %link{ rel: "apple-touch-icon-precomposed", href: image_path('favicon-72.png'),  :sizes => "72x72" }/
+  -# For non-Retina iPhone, iPod Touch, and Android 2.1+ devices:
+  %link{ rel: "apple-touch-icon-precomposed", href: image_path('favicon-57.png') }/
+
+  -# For Microsoft
+  %link{ rel: "msapplication-TileColor",      href: '#93C54B' }/
+  %link{ rel: "msapplication-TileImage",      href: image_path('favicon-144.png') }/
+
+  -# All others
+  - %w( 228 195 128 96 32 16).each do |size|
+    %link{ rel: "icon",                       href: image_path("favicon-#{ size }.png"), :sizes => "#{ size }x#{ size }" }/
