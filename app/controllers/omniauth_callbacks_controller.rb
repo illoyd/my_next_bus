@@ -4,7 +4,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def self.provides_callback_for(provider)
     class_eval %Q{
       def #{provider}
-        @user = User.find_for_oauth(env["omniauth.auth"], current_user)
+        @user = User.find_for_oauth(env["omniauth.auth"], current_or_guest_user)
 
         if @user.persisted?
           remember_me(@user)

@@ -13,8 +13,8 @@ class London::TripsController < London::Controller
   end
   
   def favorite
-    if signed_in? && favorite_params[:stop_sid].present?
-      ToggleFavoriteStopJob.new.perform(current_user, City, favorite_params[:stop_sid])
+    if favorite_params[:stop_sid].present?
+      ToggleFavoriteStopJob.new.perform(current_or_guest_user, City, favorite_params[:stop_sid])
     end
     
     if favorite_params[:id].present?
@@ -27,9 +27,7 @@ class London::TripsController < London::Controller
   protected
   
   def record_trip_request
-    if current_user
-      RecordTripRequestJob.perform_later(current_user, City, params[:id])
-    end
+    RecordTripRequestJob.perform_later(current_or_guest_user, City, params[:id])
   end
 
   def favorite_params

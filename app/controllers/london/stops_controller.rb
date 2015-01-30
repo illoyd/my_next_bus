@@ -10,10 +10,8 @@ class London::StopsController < ApplicationController
     # Redirect to stop view if requested
     redirect_to london_stop_url(params[:stop]) if params[:stop].present?
     
-    if signed_in?
-      predicted_stop_sid = current_user.predictor.predict_now
-      @predicted_stop = TransitStop.find_by(stop_sid: predicted_stop_sid) if predicted_stop_sid
-    end
+    predicted_stop_sid = current_or_guest_user.predictor.predict_now
+    @predicted_stop = TransitStop.find_by(stop_sid: predicted_stop_sid) if predicted_stop_sid
 
     # Otherwise just present form!
     flash[:info] = 'Try entering a stop number!' if !params[:stop].nil? && params[:stop].blank?
@@ -21,7 +19,7 @@ class London::StopsController < ApplicationController
 
   def show
     @statusboard = NotTfL::CachedBuses.new.stop(params[:id])
-    @favorites   = signed_in? ? current_user.favorite_destinations.favorites.destinations : []
+    @favorites   = current_or_guest_user.favorite_destinations.favorites.destinations
     
     if @statusboard.stop
       CreateOrUpdateStopJob.perform_later(City, @statusboard.stop)
@@ -55,16 +53,14 @@ class London::StopsController < ApplicationController
   end
   
   def favorite
-    ToggleFavoriteStopJob.new.perform(current_user, City, params[:id]) if signed_in?
+    ToggleFavoriteStopJob.new.perform(current_or_guest_user, City, params[:id])
     redirect_to_back_or london_stop_path(params[:id])
   end
   
   protected
   
   def record_stop_request
-    if current_user
-      RecordStopRequestJob.perform_later(current_user, City, params[:id])
-    end
+    RecordStopRequestJob.perform_later(current_or_guest_user, City, params[:id])
   end
   
   def favorite_params

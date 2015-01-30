@@ -6,8 +6,7 @@
   %p.text-muted
     Enter the five-digit stop code, shown on the bus stop marker, to get real-time bus arrivals!
 
+= render partial: 'stops', object: TopStopsForUserQuery.new(current_or_guest_user), locals: {title: 'Top stops for you', top_stop: @predicted_stop}\
+
 - unless signed_in?
   = render partial: 'sign_in_form'
-
-- if signed_in?
-  = render partial: 'stops', object: TopStopsForUserQuery.new(current_user), locals: {title: 'Top stops for you', top_stop: @predicted_stop}

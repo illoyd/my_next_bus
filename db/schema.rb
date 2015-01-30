@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141222152624) do
+ActiveRecord::Schema.define(version: 20150130223008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,10 +93,10 @@ ActiveRecord::Schema.define(version: 20141222152624) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
-    t.string   "email",                default: "", null: false
+    t.string   "email",                default: "",    null: false
     t.string   "remember_token"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",        default: 0,  null: false
+    t.integer  "sign_in_count",        default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 20141222152624) do
     t.string   "big_photo_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "guest",                default: false, null: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

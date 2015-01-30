@@ -1,4 +1,4 @@
-- favorites = signed_in? ? current_user.favorite_destinations.favorites.destinations : []
+- favorites = current_or_guest_user.favorite_destinations.favorites.destinations
 - favorite_predictions     = predictions.select{ |p| favorites.include? p.destination }
 - not_favorite_predictions = predictions.reject{ |p| favorites.include? p.destination }
 %table.table.predictions.stop

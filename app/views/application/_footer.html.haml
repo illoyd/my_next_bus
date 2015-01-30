@@ -2,12 +2,12 @@
 .container= render partial: 'search_banner'
 
 -# Diagnostics and legal
-- cache current_user do
+- cache current_or_guest_user do
   .container
     %p Data provided by #{ link_to 'Transport for London', 'http://www.tfl.gov.uk' }
     - if signed_in?
-      %p.text-muted Signed in as #{ current_user.name }
-      %p.text-muted New session? #{ ActiveSessionTracker.new(current_user).new_session? }
+      %p.text-muted Signed in as #{ current_or_guest_user.name }
+      %p.text-muted New session? #{ ActiveSessionTracker.new(current_or_guest_user).new_session? }
     
     - else
       %p.text-muted Not signed in
