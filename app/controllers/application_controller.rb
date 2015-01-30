@@ -18,14 +18,6 @@ class ApplicationController < ActionController::Base
     new_user_session_path
   end
   
-  def stop_suggester
-    @stop_suggester ||= StopSuggester.new(current_user)
-  end
-  
-  def stop_suggester?
-    stop_suggester.present?
-  end
-  
   def current_point
     if params[:lat].present? && params[:lon].present?
       @current_point ||= NotTfL::Point.new(params[:lat], params[:lon])
@@ -38,10 +30,56 @@ class ApplicationController < ActionController::Base
     current_point.present?
   end
   
-  helper_method :stop_suggester, :stop_suggester?, :current_point, :current_point?
+  helper_method :current_point, :current_point?
+
+  # if user is logged in, return current_user, else return guest_user
+  def current_or_guest_user
+    if current_user
+      if session[:guest_user_id] && session[:guest_user_id] != current_user.id
+        logging_in
+        guest_user(with_retry = false).try(:destroy)
+        session[:guest_user_id] = nil
+      end
+      current_user
+    else
+      guest_user
+    end
+  end
+  
+  # find guest_user object associated with the current session,
+  # creating one as needed
+  def guest_user(with_retry = true)
+    # Cache the value the first time it's gotten.
+    @cached_guest_user ||= User.find(session[:guest_user_id] ||= create_guest_user.id)
+
+  rescue ActiveRecord::RecordNotFound # if session[:guest_user_id] invalid
+     session[:guest_user_id] = nil
+     guest_user if with_retry
+  end
+  
+  helper_method :current_or_guest_user, :guest_user
 
   protected
 
+  # called (once) when the user logs in, insert any code your application needs
+  # to hand off from guest_user to current_user.
+  def logging_in
+    # Move all requests from guest to user
+    guest_user.stop_requests.update_all(user_id: current_user.id)
+    guest_user.trip_requests.update_all(user_id: current_user.id)
+    
+    # Move all favourites over
+    guest_user.favorite_destinations.update_all(user_id: current_user.id)
+    guest_user.favorite_stops.update_all(user_id: current_user.id)
+  end
+
+  def create_guest_user
+    User.create(name: "guest", email: "guest_#{Time.now.to_i}#{rand(100)}@example.com", guest: true).tap do |u|
+      u.save!(:validate => false)
+      session[:guest_user_id] = u.id
+    end
+  end
+  
   ##
   # Redirect to the requested page after signing in
   def after_sign_in_path_for(resource)
@@ -52,6 +90,9 @@ class ApplicationController < ActionController::Base
     # Ensure we don't go into an infinite loop
     return if action_name == 'finish_signup' || (controller_name == 'users' && action_name == 'update') || (controller_name == 'sessions' && action_name == 'destroy')
       
+    # Break if a guest user
+    return unless current_user
+    
     # Break if pending a confirmation
     return if current_user.try(:pending_any_confirmation)
 
@@ -63,9 +104,7 @@ class ApplicationController < ActionController::Base
   end
   
   def record_visit
-    if signed_in?
-      ActiveSessionTracker.new(current_user).record_visit
-    end
+    ActiveSessionTracker.new(current_or_guest_user).record_visit
   end
   
 end
