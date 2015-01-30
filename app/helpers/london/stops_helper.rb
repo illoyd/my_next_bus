@@ -19,7 +19,7 @@ module London::StopsHelper
   end
   
   def round_seconds_to_arrival(seconds)
-    seconds + seconds.modulo(RoundingThreshold)
+    seconds + RoundingThreshold - seconds.modulo(RoundingThreshold)
   end
   
   def next_label_for(prediction)
