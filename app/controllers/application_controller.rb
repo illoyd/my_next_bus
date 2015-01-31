@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  # before_action :ensure_signup_complete, only: [:new, :create, :update, :destroy]
+  before_action :ensure_signup_complete, only: [:new, :create, :update, :destroy]
   after_action :record_visit
 
   def can_redirect_back?
@@ -37,7 +37,6 @@ class ApplicationController < ActionController::Base
     if current_user
       if session[:guest_user_id] && session[:guest_user_id] != current_user.id
         logging_in
-        guest_user(with_retry = false).try(:destroy)
         session[:guest_user_id] = nil
       end
       current_user
@@ -75,7 +74,8 @@ class ApplicationController < ActionController::Base
 
   def create_guest_user
     User.create(name: "guest", email: "guest_#{Time.now.to_i}#{rand(100)}@example.com", guest: true).tap do |u|
-      u.save!(:validate => false)
+      u.skip_confirmation!
+      u.save!(validate: false)
       session[:guest_user_id] = u.id
     end
   end
@@ -92,12 +92,12 @@ class ApplicationController < ActionController::Base
       
     # Break if a guest user
     # Break if pending a confirmation
-    return if current_or_guest_user.try(:guest?) || current_or_guest_user.try(:pending_any_confirmation)
+    return if current_user.try(:guest?) || current_user.try(:pending_any_confirmation)
 
     # Redirect to the 'finish_signup' page if the user
     # email hasn't been verified yet
-    if current_or_guest_user && !current_or_guest_user.email_verified?
-      redirect_to finish_signup_path(current_or_guest_user)
+    if current_user && !current_user.email_verified?
+      redirect_to finish_signup_path(current_user)
     end
   end
   

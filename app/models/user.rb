@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
     # Update user photos
     else
       user.update_columns(
+        name:          auth.extra.raw_info.name,
         photo_url:     auth.info.image,
         big_photo_url: auth.info.image
       )
