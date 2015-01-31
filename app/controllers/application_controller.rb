@@ -92,12 +92,12 @@ class ApplicationController < ActionController::Base
       
     # Break if a guest user
     # Break if pending a confirmation
-    return if current_user.try(:guest?) || current_user.try(:pending_any_confirmation)
+    return if current_or_guest_user.try(:guest?) || current_or_guest_user.try(:pending_any_confirmation)
 
     # Redirect to the 'finish_signup' page if the user
     # email hasn't been verified yet
-    if current_user && !current_user.email_verified?
-      redirect_to finish_signup_path(current_user)
+    if current_or_guest_user && !current_or_guest_user.email_verified?
+      redirect_to finish_signup_path(current_or_guest_user)
     end
   end
   
