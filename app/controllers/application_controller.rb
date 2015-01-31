@@ -91,10 +91,8 @@ class ApplicationController < ActionController::Base
     return if action_name == 'finish_signup' || (controller_name == 'users' && action_name == 'update') || (controller_name == 'sessions' && action_name == 'destroy')
       
     # Break if a guest user
-    return unless current_user
-    
     # Break if pending a confirmation
-    return if current_user.try(:pending_any_confirmation)
+    return if current_user.try(:guest?) || current_user.try(:pending_any_confirmation)
 
     # Redirect to the 'finish_signup' page if the user
     # email hasn't been verified yet
