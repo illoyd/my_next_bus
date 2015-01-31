@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_action :ensure_signup_complete, only: [:new, :create, :update, :destroy]
+  # before_action :ensure_signup_complete, only: [:new, :create, :update, :destroy]
   after_action :record_visit
 
   def can_redirect_back?
