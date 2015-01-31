@@ -57,6 +57,7 @@ gem 'haml'
 gem 'haml-rails'
 gem 'hashie'
 gem 'ai4r'
+gem 'httpclient'
 
 #
 # Reporting gems
