@@ -63,13 +63,7 @@ class ApplicationController < ActionController::Base
   # called (once) when the user logs in, insert any code your application needs
   # to hand off from guest_user to current_user.
   def logging_in
-    # Move all requests from guest to user
-    guest_user.stop_requests.update_all(user_id: current_user.id)
-    guest_user.trip_requests.update_all(user_id: current_user.id)
-    
-    # Move all favourites over
-    guest_user.favorite_destinations.update_all(user_id: current_user.id)
-    guest_user.favorite_stops.update_all(user_id: current_user.id)
+    current_user.absorb_from(guest_user)
   end
 
   def create_guest_user

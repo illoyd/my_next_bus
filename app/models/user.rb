@@ -90,5 +90,15 @@ class User < ActiveRecord::Base
   def favorites_for(city, stop_sid)
     favorite_destinations.where(city: city, stop_sid: stop_sid, favorite: true).distinct.pluck(:destination)
   end
+  
+  def absorb_from(other_user)
+    # Move all requests from guest to user
+    other_user.stop_requests.update_all(user_id: self.id)
+    other_user.trip_requests.update_all(user_id: self.id)
+    
+    # Move all favourites over
+    other_user.favorite_destinations.update_all(user_id: self.id)
+    other_user.favorite_stops.update_all(user_id: self.id)
+  end
 
 end
