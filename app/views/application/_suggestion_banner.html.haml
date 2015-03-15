@@ -24,7 +24,7 @@
                 Application.suggestion_timer.stop()
           
               # Create a new refresh timer
-              Application.suggestion_timer = new Application.SuggestionTimer('#{ suggestion_url }', 10, $('##{ suggestion_go_id }'), $('##{ suggestion_no_id }'))
+              Application.suggestion_timer = new Application.SuggestionTimer('#{ suggestion_url }', Application.SuggestionTimer.defaultInterval, $('##{ suggestion_go_id }'), $('##{ suggestion_no_id }'))
               Application.suggestion_timer.start()
               
               # Create a closer

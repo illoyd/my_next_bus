@@ -89,6 +89,10 @@ class Application.RefreshTimer extends Application.LocationTimer
 # Suggestion Timer visits a given page and has one control with the countdown and another to stop.
 class Application.SuggestionTimer extends Application.LocationTimer
 
+  ##
+  # The default interval for suggestions, in seconds
+  @defaultInterval = 15
+
   constructor: (@url, @interval, @go_control, @stop_control) ->
     super(@url, @interval)
     @stop_control.on('click', this.stop.bind(this))
