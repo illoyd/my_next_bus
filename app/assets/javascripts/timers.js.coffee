@@ -6,6 +6,7 @@ class Application.LocationTimer
 
   constructor: (@url, @interval) ->
     @secondsRemaining = @interval
+    @timestamp        = Date.now() + @interval * 1000
     @timer            = null
     @debug            = true
     
@@ -29,6 +30,7 @@ class Application.LocationTimer
   reset: () ->
     console.log('reset') if @debug
     @secondsRemaining = @interval
+    @timestamp        = Date.now() + @interval * 1000
   
   # Toggle
   toggle: () ->
@@ -49,7 +51,7 @@ class Application.LocationTimer
   doTick: () ->
     console.log('doTick: ' + @secondsRemaining) if @debug
     @secondsRemaining--
-    if @secondsRemaining <= 0
+    if @secondsRemaining <= 0 || @timestamp <= Date.now()
       this.stop()
       Turbolinks.visit(@url)
 
