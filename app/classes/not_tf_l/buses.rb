@@ -6,7 +6,7 @@ class NotTfL::Buses
   FIELDS            = ( STOP_FIELDS + PREDICTION_FIELDS + MESSAGE_FIELDS ).uniq
   
   STOP_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState Towards LineID LineName DestinationText TripID EstimatedTime ExpireTime MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
-  NEAR_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState Latitude Longitude )
+  NEAR_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState Towards Latitude Longitude )
   TRIP_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState LineID LineName DestinationText TripID EstimatedTime ExpireTime MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
   
   def initialize
