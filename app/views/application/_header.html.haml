@@ -6,7 +6,7 @@
           %span.sr-only Toggle navigation
           = photo_tag_for current_or_guest_user
         %a.navbar-brand{:href => london_stops_path} MyNextBus
-        = render partial: 'autorefresh_button'
+        .navbar-right= render partial: 'autorefresh_button'
 
       #navbar.collapse.navbar-collapse
         %ul.nav.navbar-nav
@@ -20,4 +20,11 @@
           - else
             %li{"data-target" => "#sign-in-modal", "data-toggle" => "modal", :type => "button"}= link_to "Sign in", '#'
 
-= render partial: 'sign_in_modal'
+        - if signed_in?
+          %ul.nav.navbar-nav.navbar-right.hidden-xs
+            %li
+              = link_to edit_user_path(current_or_guest_user), style: 'padding-top: 15px; padding-bottom: 15px;' do
+                = photo_tag_for current_or_guest_user
+
+- unless signed_in?
+  = render partial: 'sign_in_modal'
