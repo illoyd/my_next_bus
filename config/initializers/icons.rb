@@ -9,6 +9,8 @@ ICONS = {
 
   danger:      'exclamation-sign',
   exclamation: 'exclamation-sign',
+  
+  close:       'remove'
 
 }.with_indifferent_access.freeze
 

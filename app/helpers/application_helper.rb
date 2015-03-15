@@ -81,5 +81,14 @@ module ApplicationHelper
     toggle = favorites.include?(stop)
     favorite_toggle(path, toggle, options)
   end
+  
+  def data_for(stop)
+    {
+      map: 'map',
+      lat: stop.latitude,
+      lon: stop.longitude,
+      title: stop.indicator
+    }
+  end
 
 end

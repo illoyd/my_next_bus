@@ -1,0 +1,18 @@
+- cache do
+  #map-modal.modal.fade
+    .modal-dialog.modal-lg{ style: 'margin: 0px; height: 100%; width: 100%;' }
+      .modal-content{ style: 'height: 100%;' }
+        .modal-header
+          %button.close{"data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"}= icon(:close)
+            %span.sr-only Close
+          %h4.modal-title Map
+        .modal-body{ style: 'height: 85%;' }
+          #map
+
+  :coffeescript
+    map = null
+    $('#map-modal').on 'shown.bs.modal', ->
+      map = new Application.Map() unless map
+      google.maps.event.trigger(map.map, "resize")
+    

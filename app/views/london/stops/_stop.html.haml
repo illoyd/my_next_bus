@@ -1,6 +1,6 @@
 - top_stop  ||= nil
 - cache [stop, current_point] do
-  = link_to london_stop_path(stop.stop_sid), class: 'list-group-item' do
+  = link_to london_stop_path(stop.stop_sid), class: 'list-group-item', data: data_for(stop)  do
     - if stop == top_stop
       %span.label.label-info Top!
   

@@ -11,5 +11,9 @@
 - if @stops.stops.any?
   = render partial: 'stops', object: @stops.stops.select(&:show?), locals: { title: 'Nearby stops for you', hide_if_empty: false, latitude: params[:lat], longitude: params[:lon] }
 
+= render partial: 'map_modal'
+%button.btn.btn-danger.btn-block{"data-target" => "#map-modal", "data-toggle" => "modal", :type => "button"}
+  Map it!
+
 - unless signed_in?
   = render partial: 'sign_in_form'
