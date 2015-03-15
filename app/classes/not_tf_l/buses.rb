@@ -30,7 +30,7 @@ class NotTfL::Buses
       'TripID' => trip_sid,
       'ReturnList' => TRIP_DEFAULT_FIELDS.join(','),
       'StopAlso' => true
-    ), STOP_DEFAULT_FIELDS)
+    ), TRIP_DEFAULT_FIELDS)
   end
   
   def near(latitude, longitude, radius = 250)
