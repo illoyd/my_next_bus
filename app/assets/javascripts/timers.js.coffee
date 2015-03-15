@@ -49,8 +49,8 @@ class Application.LocationTimer
   
   # Do countdown tick
   doTick: () ->
+    @secondsRemaining = Math.floor( (@timestamp - Date.now()) / 1000 )
     console.log('doTick: ' + @secondsRemaining) if @debug
-    @secondsRemaining--
     if @secondsRemaining <= 0 || @timestamp <= Date.now()
       this.stop()
       Turbolinks.visit(@url)
