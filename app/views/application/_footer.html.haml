@@ -10,7 +10,7 @@
       %p.text-muted New session? #{ ActiveSessionTracker.new(current_or_guest_user).new_session? }
     
     - else
-      %p.text-muted Not signed in (#{ current_or_guest_user.name })
+      %p.text-muted Not signed in (#{ current_or_guest_user.id })
 
 -# Geolocater form
 = render partial: 'locate_form'
