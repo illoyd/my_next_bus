@@ -6,5 +6,5 @@
       Application.refresh_timer.stop()
 
     # Create a new refresh timer
-    Application.refresh_timer = new Application.RefreshTimer(location.toString(), 15, $('#autorefresh'))
+    Application.refresh_timer = new Application.RefreshTimer(location.toString(), Application.RefreshTimer.defaultInterval, $('#autorefresh'))
     Application.refresh_timer.start()

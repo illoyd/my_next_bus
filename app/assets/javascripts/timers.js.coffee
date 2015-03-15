@@ -59,6 +59,10 @@ class Application.LocationTimer
 # Refresh Timer is used to visit a given page and to control the timer through a single button.
 class Application.RefreshTimer extends Application.LocationTimer
 
+  ##
+  # The default interval for auto-refreshes, in seconds
+  @defaultInterval = 30
+
   constructor: (@url, @interval, @control) ->
     super(@url, @interval)
     @control.on('click', this.toggle.bind(this))
