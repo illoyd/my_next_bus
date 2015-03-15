@@ -5,7 +5,7 @@ class NotTfL::Buses
   MESSAGE_FIELDS    = %w( StopPointName StopID StopCode1 StopCode2 StopPointType Towards Bearing StopPointIndicator StopPointState Latitude Longitude MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
   FIELDS            = ( STOP_FIELDS + PREDICTION_FIELDS + MESSAGE_FIELDS ).uniq
   
-  STOP_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState LineID LineName DestinationText TripID EstimatedTime ExpireTime MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
+  STOP_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState Towards LineID LineName DestinationText TripID EstimatedTime ExpireTime MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
   NEAR_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState Latitude Longitude )
   TRIP_DEFAULT_FIELDS = %w( StopPointName StopCode1 StopPointType StopPointIndicator StopPointState LineID LineName DestinationText TripID EstimatedTime ExpireTime MessageUUID MessageType MessagePriority MessageText StartTime ExpireTime )
   
