@@ -1,11 +1,17 @@
 - top_stop  ||= nil
 - cache [stop, current_point] do
   = link_to london_stop_path(stop.stop_sid), class: 'list-group-item' do
-    = stop.name || stop.stop_sid
-    %span.label.label-danger= stop.indicator
-  
     - if stop == top_stop
       %span.label.label-info Top!
   
+    = stop.name || stop.stop_sid
+  
+    -if stop.towards.present?
+      %span.text-muted
+        to
+        = stop.towards
+  
+    %span.label.label-danger= stop.indicator
+
     - if stop.try(:latitude).present? && stop.try(:longitude).present? && current_point.present?
       %span.badge #{ current_point.distance_between(stop.point).ceil }m
