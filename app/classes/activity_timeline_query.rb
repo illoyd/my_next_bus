@@ -1,7 +1,7 @@
 class ActivityTimelineQuery < SimpleDelegator
 
   def initialize(base = StopRequest, window = 8.weeks.ago)
-    __setobj__ base.where('created_at >= ?', window).order('day_of_week, stop_sid, minute_of_day')
+    __setobj__ base.where('created_at >= ?', window).order('day_of_week, properties->\'stop_sid\', minute_of_day')
   end
   
   def self.for(user)

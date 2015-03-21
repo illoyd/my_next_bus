@@ -6,8 +6,11 @@ class User < ActiveRecord::Base
   # :database_authenticatable, :registerable, :validatable, :lockable, :timeoutable, :recoverable
   devise :rememberable, :trackable, :omniauthable, :confirmable, :async
   
-  has_many :stop_requests,         inverse_of: :user
-  has_many :trip_requests,         inverse_of: :user
+  #has_many :stop_requests,         inverse_of: :user
+  #has_many :trip_requests,         inverse_of: :user
+  has_many :intents,               inverse_of: :user
+  delegate :stop_requests, :trip_requests, to: :intents
+
   has_many :favorite_destinations, inverse_of: :user
   has_many :favorite_stops,        inverse_of: :user
 
