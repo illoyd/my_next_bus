@@ -4,11 +4,13 @@ class RecordTripRequestJob < ActiveJob::Base
   def perform(user, city, trip_id)
     
     # Get the line name from the bus system
-    line_name = NotTfL::CachedBuses.new.trip(trip_id).predictions.first.try(:line_name)
+    prediction  = NotTfL::CachedBuses.new.trip(trip_id).predictions.first
+    line_name   = prediction.try(:line_name)
+    destination = prediction.try(:destination_text)
 
     # If we have a user and a line name, proceed with recording
-    if user && line_name
-      user.trip_requests.create(city: city, line_name: line_name)
+    if user
+      TripRequest.create!(user: user, city: city, trip_sid: trip_id, line_name: line_name, destination: destination)
     end
   end
 
