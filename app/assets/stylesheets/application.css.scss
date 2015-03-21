@@ -259,3 +259,26 @@ div#map {
   width:  100%;
   min-height: 250px;
 }
+
+// Map modal
+.map-modal-dialog {
+  height: 100%;
+  padding-bottom: 65px;
+  
+  .modal-content {
+    height: 100%;
+    padding-bottom: 60px;
+    
+    .modal-body { height: 100%; }
+  }
+}
+
+@media (min-width: 728px) {
+  .map-modal-dialog {
+    padding-bottom: 95px;
+
+    .modal-content {
+      padding-bottom: 90px;
+    }
+  }
+}

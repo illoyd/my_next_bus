@@ -1,7 +1,15 @@
 - hide_if_empty ||= true
 - title         ||= 'Stops'
 - top_stop      ||= nil
+- mappable      ||= false
 - if !hide_if_empty || stops.any?
   .panel.panel-default
-    .panel-heading= title
+    .panel-heading
+      = title
+      - if mappable
+        %button.btn.btn-danger.btn-xs.pull-right{"data-target" => "#map-modal", "data-toggle" => "modal", :type => "button"}
+          = icon('map-marker')
+          Map
     .list-group= render(partial: 'stop', collection: stops, locals: { top_stop: top_stop })
+  - if mappable
+    = render partial: 'map_modal'
