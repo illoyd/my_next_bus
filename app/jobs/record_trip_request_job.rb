@@ -10,7 +10,7 @@ class RecordTripRequestJob < ActiveJob::Base
 
     # If we have a user and a line name, proceed with recording
     if user
-      TripRequest.create!(user: user, city: city, trip_sid: trip_id, line_name: line_name, destination: destination)
+      TripRequest.create(user: user, city: city, trip_sid: trip_id, line_name: line_name, destination: destination)
     end
   end
 

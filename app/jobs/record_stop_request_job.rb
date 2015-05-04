@@ -7,7 +7,7 @@ class RecordStopRequestJob < ActiveJob::Base
     
     # If we have a user and a stop, record the request
     if user && stop
-      StopRequest.create!(user: user, stop_sid: stop.stop_sid, city: city)
+      StopRequest.create(user: user, stop_sid: stop.stop_sid, city: city)
     end
   end
 
